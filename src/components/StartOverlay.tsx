@@ -69,20 +69,26 @@ export default function StartOverlay({ onStart }: Props) {
           Ready? Let's explore! 🚀
         </motion.button>
 
-        {/* Donate Button */}
+        {/* Donate Button — prominent */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
+          className="flex flex-col items-center gap-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
         >
           <a
-            href="https://www.paypal.com/donate/?business=YOUR_PAYPAL_EMAIL&currency_code=EUR"
+            href="https://www.paypal.com/donate/?business=manoloto%40hotmail.com&currency_code=EUR&item_name=Support+Little+Galaxy"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+            className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all"
+            style={{
+              boxShadow: "0 0 20px hsl(320 90% 60% / 0.15)",
+            }}
           >
-            ☕ Buy me a coffee via PayPal
+            <span className="text-2xl">☕</span>
+            <span>Support this project — Buy me a coffee</span>
           </a>
+          <span className="text-xs text-muted-foreground/50">via PayPal · every little bit helps ❤️</span>
         </motion.div>
 
         {/* Footer */}
