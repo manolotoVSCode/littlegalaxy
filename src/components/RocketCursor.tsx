@@ -62,12 +62,12 @@ export default function RocketCursor() {
             style={{
               left: p.x,
               top: p.y,
-              width: 6 * (1 - age),
-              height: 6 * (1 - age),
+              width: 10 * (1 - age),
+              height: 10 * (1 - age),
               backgroundColor: p.color,
               opacity: 1 - age,
               transform: `translate(-50%, -50%)`,
-              boxShadow: `0 0 6px ${p.color}`,
+              boxShadow: `0 0 10px ${p.color}, 0 0 20px ${p.color}66`,
             }}
           />
         );
