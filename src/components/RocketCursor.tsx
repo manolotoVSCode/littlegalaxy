@@ -8,8 +8,8 @@ interface Particle {
   born: number;
 }
 
-const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb"];
-const LIFETIME = 1500;
+const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"];
+const LIFETIME = 2500;
 
 export default function RocketCursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
