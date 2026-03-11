@@ -3,6 +3,8 @@ import { AnimatePresence } from "framer-motion";
 import StarField from "@/components/StarField";
 import ShootingStars from "@/components/ShootingStars";
 import BlackHoles from "@/components/BlackHoles";
+import Planets from "@/components/Planets";
+import Satellite from "@/components/Satellite";
 import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
