@@ -3,6 +3,8 @@ import { AnimatePresence } from "framer-motion";
 import StarField from "@/components/StarField";
 import ShootingStars from "@/components/ShootingStars";
 import BlackHoles from "@/components/BlackHoles";
+import Planets from "@/components/Planets";
+import Satellite from "@/components/Satellite";
 import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
@@ -92,7 +94,7 @@ const Index = () => {
       className="fixed inset-0 animate-bg-shift overflow-hidden cursor-none"
       style={{
         background:
-          "linear-gradient(135deg, hsl(220 80% 12%), hsl(270 70% 20%), hsl(300 60% 18%), hsl(240 80% 15%))",
+          "linear-gradient(135deg, hsl(225 80% 6%), hsl(230 70% 10%), hsl(240 60% 12%), hsl(220 80% 8%))",
       }}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
@@ -101,6 +103,8 @@ const Index = () => {
       <StarField />
       <ShootingStars />
       <BlackHoles />
+      <Planets />
+      <Satellite />
 
       <AnimatePresence>
         {!started && <StartOverlay onStart={handleStart} />}
