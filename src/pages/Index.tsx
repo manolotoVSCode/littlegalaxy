@@ -99,6 +99,8 @@ const Index = () => {
       onTouchStart={handleTouch}
     >
       <StarField />
+      <ShootingStars />
+      <BlackHoles />
 
       <AnimatePresence>
         {!started && <StartOverlay onStart={handleStart} />}
