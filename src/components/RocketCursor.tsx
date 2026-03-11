@@ -8,8 +8,8 @@ interface Particle {
   born: number;
 }
 
-const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb"];
-const LIFETIME = 1500;
+const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"];
+const LIFETIME = 2500;
 
 export default function RocketCursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
@@ -24,17 +24,17 @@ export default function RocketCursor() {
     const y = p.clientY;
     setPos({ x, y });
 
-    // Add particle every other frame
+    // Add multiple particles per frame
     frameRef.current++;
     if (frameRef.current % 2 === 0) {
-      const newP: Particle = {
+      const newParticles: Particle[] = Array.from({ length: 3 }, () => ({
         id: idRef.current++,
-        x: x + (Math.random() - 0.5) * 10,
-        y: y + 15 + Math.random() * 8,
+        x: x + (Math.random() - 0.5) * 20,
+        y: y + 20 + Math.random() * 14,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
         born: Date.now(),
-      };
-      setParticles((prev) => [...prev.slice(-40), newP]);
+      }));
+      setParticles((prev) => [...prev.slice(-80), ...newParticles]);
     }
   }, []);
 
@@ -62,19 +62,19 @@ export default function RocketCursor() {
             style={{
               left: p.x,
               top: p.y,
-              width: 6 * (1 - age),
-              height: 6 * (1 - age),
+              width: 10 * (1 - age),
+              height: 10 * (1 - age),
               backgroundColor: p.color,
               opacity: 1 - age,
               transform: `translate(-50%, -50%)`,
-              boxShadow: `0 0 6px ${p.color}`,
+              boxShadow: `0 0 10px ${p.color}, 0 0 20px ${p.color}66`,
             }}
           />
         );
       })}
       {/* Rocket cursor */}
       <div
-        className="absolute text-5xl"
+        className="absolute text-6xl"
         style={{
           left: pos.x,
           top: pos.y,
