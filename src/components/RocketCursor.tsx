@@ -24,17 +24,17 @@ export default function RocketCursor() {
     const y = p.clientY;
     setPos({ x, y });
 
-    // Add particle every other frame
+    // Add multiple particles per frame
     frameRef.current++;
     if (frameRef.current % 2 === 0) {
-      const newP: Particle = {
+      const newParticles: Particle[] = Array.from({ length: 3 }, () => ({
         id: idRef.current++,
-        x: x + (Math.random() - 0.5) * 10,
-        y: y + 15 + Math.random() * 8,
+        x: x + (Math.random() - 0.5) * 20,
+        y: y + 20 + Math.random() * 14,
         color: COLORS[Math.floor(Math.random() * COLORS.length)],
         born: Date.now(),
-      };
-      setParticles((prev) => [...prev.slice(-40), newP]);
+      }));
+      setParticles((prev) => [...prev.slice(-80), ...newParticles]);
     }
   }, []);
 
