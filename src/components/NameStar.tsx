@@ -28,14 +28,14 @@ export default function NameStar({ name, x, y }: NameStarProps) {
       <AnimatePresence>
         {hovered && (
           <motion.div
-            className="absolute left-1/2 -translate-x-1/2 -top-14 whitespace-nowrap text-3xl font-black tracking-widest"
-            initial={{ opacity: 0, y: 10, scale: 0.5 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.5 }}
-            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className="absolute left-1/2 -translate-x-1/2 -top-10 whitespace-nowrap text-xl font-bold tracking-widest"
+            initial={{ opacity: 0, y: 6, scale: 0.7 }}
+            animate={{ opacity: 0.85, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.7 }}
+            transition={{ type: "spring", stiffness: 300, damping: 18 }}
             style={{
-              color: "#ffeb3b",
-              textShadow: "0 0 15px #ffeb3b, 0 0 30px #ff9100, 0 0 45px #ff610088",
+              color: "#ffeb3bcc",
+              textShadow: "0 0 8px #ffeb3b66, 0 0 16px #ff910044",
             }}
           >
             {name}

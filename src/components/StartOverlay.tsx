@@ -25,7 +25,7 @@ export default function StartOverlay({ onStart }: Props) {
         animate={{ scale: [1, 1.05, 1] }}
         transition={{ repeat: Infinity, duration: 2 }}
       >
-        ¡TOCA PARA JUGAR!
+        TAP TO PLAY!
       </motion.div>
       <div className="text-4xl mt-6 flex gap-4">
         🪐 ⭐ 👽 🚀
