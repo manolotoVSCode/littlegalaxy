@@ -113,6 +113,7 @@ const Index = () => {
 
       {started && (
         <>
+          <FullscreenHint />
           <NameStar name="Roberto" x="15%" y="25%" />
           <NameStar name="Gabriela" x="75%" y="35%" />
         </>
