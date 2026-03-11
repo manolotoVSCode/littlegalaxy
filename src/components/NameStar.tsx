@@ -18,9 +18,9 @@ export default function NameStar({ name, x, y }: NameStarProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <motion.div
-        className="text-5xl select-none"
-        animate={{ scale: [1, 1.15, 1], rotate: [0, 5, -5, 0] }}
-        transition={{ repeat: Infinity, duration: 2.5 }}
+        className="text-2xl select-none opacity-60"
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
       >
         🌟
       </motion.div>
