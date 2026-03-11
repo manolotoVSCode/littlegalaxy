@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import StarField from "@/components/StarField";
+import ShootingStars from "@/components/ShootingStars";
+import BlackHoles from "@/components/BlackHoles";
 import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
