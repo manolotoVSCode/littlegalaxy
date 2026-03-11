@@ -103,6 +103,8 @@ const Index = () => {
       <StarField />
       <ShootingStars />
       <BlackHoles />
+      <Planets />
+      <Satellite />
 
       <AnimatePresence>
         {!started && <StartOverlay onStart={handleStart} />}
