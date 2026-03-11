@@ -74,7 +74,7 @@ export default function RocketCursor() {
       })}
       {/* Rocket cursor */}
       <div
-        className="absolute text-5xl"
+        className="absolute text-6xl"
         style={{
           left: pos.x,
           top: pos.y,
