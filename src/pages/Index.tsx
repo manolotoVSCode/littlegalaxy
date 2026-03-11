@@ -9,6 +9,7 @@ import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
 import NameStar from "@/components/NameStar";
+import FullscreenHint from "@/components/FullscreenHint";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
 
 interface SpawnedObject {
