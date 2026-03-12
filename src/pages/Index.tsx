@@ -6,7 +6,7 @@ import BlackHoles from "@/components/BlackHoles";
 import Planets from "@/components/Planets";
 import Nebulas from "@/components/Nebulas";
 import Satellite from "@/components/Satellite";
-import SpaceObject from "@/components/SpaceObject";
+import SpaceObject, { OBJECTS_LEFT, OBJECTS_RIGHT, LETTER_COLORS } from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
 import NameStar from "@/components/NameStar";
