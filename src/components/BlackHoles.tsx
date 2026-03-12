@@ -54,8 +54,8 @@ export default function BlackHoles() {
               }}
               transition={{
                 repeat: Infinity,
-                duration: 2 + i * 0.3,
-                delay: i * 0.4,
+                duration: 4 + i * 0.5,
+                delay: i * 0.6,
                 ease: "easeIn",
               }}
             />
@@ -73,10 +73,10 @@ export default function BlackHoles() {
                 "conic-gradient(from 0deg, transparent 0%, hsl(270 80% 50% / 0.15) 15%, transparent 30%, hsl(200 80% 50% / 0.1) 45%, transparent 60%, hsl(320 80% 50% / 0.12) 75%, transparent 90%)",
               filter: "blur(3px)",
             }}
-            animate={{ rotate: [0, 360], scale: [1, 0.92, 1] }}
+            animate={{ rotate: [0, 360], scale: [1, 0.95, 1] }}
             transition={{
-              rotate: { repeat: Infinity, duration: 8, ease: "linear" },
-              scale: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+              rotate: { repeat: Infinity, duration: 16, ease: "linear" },
+              scale: { repeat: Infinity, duration: 6, ease: "easeInOut" },
             }}
           />
 
@@ -92,10 +92,10 @@ export default function BlackHoles() {
                 "conic-gradient(from 180deg, transparent 0%, hsl(270 90% 40% / 0.25) 20%, transparent 40%, hsl(280 80% 35% / 0.2) 60%, transparent 80%)",
               filter: "blur(2px)",
             }}
-            animate={{ rotate: [360, 0], scale: [0.95, 1.05, 0.95] }}
+            animate={{ rotate: [360, 0], scale: [0.97, 1.03, 0.97] }}
             transition={{
-              rotate: { repeat: Infinity, duration: 5, ease: "linear" },
-              scale: { repeat: Infinity, duration: 2.5, ease: "easeInOut" },
+              rotate: { repeat: Infinity, duration: 10, ease: "linear" },
+              scale: { repeat: Infinity, duration: 5, ease: "easeInOut" },
             }}
           />
 
@@ -110,10 +110,10 @@ export default function BlackHoles() {
               boxShadow:
                 `inset 0 0 ${h.size * 0.4}px hsl(0 0% 0%), 0 0 ${h.size * 0.6}px ${h.size * 0.2}px hsl(0 0% 0% / 0.5)`,
             }}
-            animate={{ scale: [1, 1.06, 0.97, 1] }}
+            animate={{ scale: [1, 1.03, 0.98, 1] }}
             transition={{
               repeat: Infinity,
-              duration: 3,
+              duration: 6,
               ease: "easeInOut",
             }}
           />
@@ -130,10 +130,10 @@ export default function BlackHoles() {
               boxShadow:
                 "0 0 8px hsl(40 100% 70% / 0.1), inset 0 0 8px hsl(40 100% 70% / 0.05)",
             }}
-            animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.7, 0.4] }}
+            animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{
               repeat: Infinity,
-              duration: 2.5,
+              duration: 5,
               ease: "easeInOut",
             }}
           />

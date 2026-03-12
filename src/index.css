@@ -55,8 +55,8 @@
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
 }
 
 @keyframes breathe {
@@ -65,7 +65,7 @@
 }
 
 .animate-bg-shift {
-  animation: bg-shift 8s ease-in-out infinite;
+  animation: bg-shift 16s ease-in-out infinite;
   background-size: 400% 400%;
 }
 

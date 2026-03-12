@@ -81,8 +81,8 @@ export default function SpaceObject({ x, y, id, variant, letter, onDone, onTap }
           damping: variant === "right" ? 8 : 12,
         },
         opacity: { duration: 0.3 },
-        y: { duration: 3, ease: "easeOut" },
-        x: { duration: 3, ease: "easeOut" },
+        y: { duration: 5, ease: "easeOut" },
+        x: { duration: 5, ease: "easeOut" },
         rotate: { type: "spring", stiffness: 100, damping: 10 },
       }}
       onAnimationComplete={() => onDone(id)}
