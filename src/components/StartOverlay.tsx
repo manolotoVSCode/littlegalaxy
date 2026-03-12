@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import saturnLogo from "@/assets/saturn-logo.png";
 
 interface Props {
   onStart: () => void;
