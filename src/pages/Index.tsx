@@ -42,8 +42,31 @@ const Index = () => {
       const x = clientX ?? Math.random() * (window.innerWidth - 100);
       const y = clientY ?? Math.random() * (window.innerHeight - 100);
       const id = `obj-${objId++}`;
-      setObjects((prev) => [...prev.slice(-15), { id, x, y, variant, letter }]);
+      const isSmall = window.innerWidth < 640;
+      const isLetter = variant === "letter" && letter;
+
+      // Pre-compute random values so they don't change on re-render
+      const pool = variant === "right" ? OBJECTS_RIGHT : OBJECTS_LEFT;
+      const obj = pool[Math.floor(Math.random() * pool.length)];
+      const baseSize = isLetter ? 70 + Math.random() * 50 : 60 + Math.random() * 60;
+      const size = isSmall ? baseSize * 0.5 : baseSize;
+      const color = LETTER_COLORS[Math.floor(Math.random() * LETTER_COLORS.length)];
+      const rotation = variant === "right" ? (Math.random() - 0.5) * 60 : 0;
+      const floatDir = variant === "right" ? (Math.random() - 0.5) * 150 : 0;
+
+      const newObj: SpawnedObject = {
+        id, x, y, variant, letter,
+        emoji: obj.emoji, emojiLabel: obj.label,
+        color, size, rotation, floatDir,
+      };
+
+      setObjects((prev) => [...prev.slice(-8), newObj]);
       playNote();
+
+      // Auto-remove after 5s to prevent accumulation
+      setTimeout(() => {
+        setObjects((prev) => prev.filter((o) => o.id !== id));
+      }, 5000);
     },
     [started, playNote]
   );
