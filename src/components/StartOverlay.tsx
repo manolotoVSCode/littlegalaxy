@@ -13,13 +13,7 @@ export default function StartOverlay({ onStart }: Props) {
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
-      <div
-        className="w-full max-w-2xl mx-auto px-6 flex flex-col gap-6 md:gap-8 items-center text-center min-h-full justify-start md:justify-center"
-        style={{
-          paddingTop: "calc(env(safe-area-inset-top) + 1.5rem)",
-          paddingBottom: "calc(env(safe-area-inset-bottom) + 2rem)",
-        }}
-      >
+      <div className="w-full max-w-2xl mx-auto px-6 pt-[calc(env(safe-area-inset-top)+4rem)] pb-[calc(env(safe-area-inset-bottom)+2rem)] md:pt-12 md:pb-12 flex flex-col gap-6 md:gap-8 items-center text-center min-h-full justify-start md:justify-center">
         {/* Title */}
         <motion.div
           className="flex flex-col items-center gap-3"
@@ -30,7 +24,7 @@ export default function StartOverlay({ onStart }: Props) {
           <motion.img
             src={saturnLogo}
             alt="Saturn"
-            className="w-28 md:w-40 h-auto max-w-[70vw] shrink-0"
+            className="w-20 h-20 md:w-40 md:h-40 object-contain shrink-0"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
