@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 const PLANETS = [
-  { emoji: "🪐", x: 5, y: 12, size: 80, duration: 40 },
-  { emoji: "🌕", x: 92, y: 15, size: 30, duration: 35 },
-  { emoji: "🔴", x: 12, y: 78, size: 28, duration: 38 },
+  { emoji: "🪐", x: 5, y: 12, size: 80, sizeSmall: 40, duration: 40 },
+  { emoji: "🌕", x: 92, y: 15, size: 30, sizeSmall: 18, duration: 35 },
+  { emoji: "🔴", x: 12, y: 78, size: 28, sizeSmall: 16, duration: 38 },
 ];
 
 export default function Planets() {
+  const isSmall = useIsSmallScreen();
+
   return (
     <div className="fixed inset-0 pointer-events-none z-[1]">
       {PLANETS.map((p, i) => (
@@ -16,7 +19,7 @@ export default function Planets() {
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
-            fontSize: p.size,
+            fontSize: isSmall ? p.sizeSmall : p.size,
             lineHeight: 1,
           }}
           animate={{
