@@ -8,12 +8,12 @@ interface Props {
 export default function StartOverlay({ onStart }: Props) {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md overflow-y-auto cursor-default"
-      style={{ touchAction: "auto" }}
+      className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
+      style={{ touchAction: "pan-y" }}
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="w-full max-w-2xl mx-auto px-6 py-12 flex flex-col gap-8 items-center text-center">
+      <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col items-center justify-start gap-8 px-6 pt-6 pb-12 text-center md:justify-center md:py-12">
         {/* Title */}
         <motion.div
           className="flex flex-col items-center gap-3"
@@ -56,11 +56,8 @@ export default function StartOverlay({ onStart }: Props) {
 
         {/* CTA Button */}
         <motion.button
+          type="button"
           onClick={() => {
-            document.documentElement.requestFullscreen?.().catch(() => {});
-            onStart();
-          }}
-          onTouchStart={() => {
             document.documentElement.requestFullscreen?.().catch(() => {});
             onStart();
           }}
