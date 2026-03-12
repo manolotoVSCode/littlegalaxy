@@ -110,10 +110,10 @@ export default function BlackHoles() {
               boxShadow:
                 `inset 0 0 ${h.size * 0.4}px hsl(0 0% 0%), 0 0 ${h.size * 0.6}px ${h.size * 0.2}px hsl(0 0% 0% / 0.5)`,
             }}
-            animate={{ scale: [1, 1.06, 0.97, 1] }}
+            animate={{ scale: [1, 1.03, 0.98, 1] }}
             transition={{
               repeat: Infinity,
-              duration: 3,
+              duration: 6,
               ease: "easeInOut",
             }}
           />
