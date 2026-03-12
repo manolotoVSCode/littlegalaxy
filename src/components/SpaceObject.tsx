@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 const OBJECTS_LEFT = [
   { emoji: "🪐", label: "planet" },
