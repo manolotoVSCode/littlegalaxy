@@ -85,7 +85,7 @@ export default function StartOverlay({ onStart }: Props) {
           transition={{ delay: 0.7, duration: 0.5 }}
         >
           <a
-            href="https://www.paypal.com/donate/?business=manoloto%40hotmail.com&currency_code=MXN&item_name=Support+Little+Galaxy"
+            href="https://paypal.me/manoloto77"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all"
