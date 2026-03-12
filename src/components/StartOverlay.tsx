@@ -8,11 +8,12 @@ interface Props {
 export default function StartOverlay({ onStart }: Props) {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-background/95 backdrop-blur-md overflow-y-auto cursor-default"
+      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
+      style={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch" }}
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="w-full max-w-2xl mx-auto px-6 py-8 md:py-12 flex flex-col gap-6 md:gap-8 items-center text-center min-h-full justify-center">
+      <div className="w-full max-w-2xl mx-auto px-6 pt-8 pb-10 md:py-12 flex flex-col gap-6 md:gap-8 items-center text-center min-h-full justify-start md:justify-center">
         {/* Title */}
         <motion.div
           className="flex flex-col items-center gap-3"
