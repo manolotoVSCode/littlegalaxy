@@ -159,6 +159,17 @@ const Index = () => {
             y={obj.y}
             variant={obj.variant}
             letter={obj.letter}
+            emoji={obj.emoji}
+            emojiLabel={obj.emojiLabel}
+            color={obj.color}
+            size={obj.size}
+            rotation={obj.rotation}
+            floatDir={obj.floatDir}
+            onDone={handleRemove}
+            onTap={playPop}
+          />
+        ))}
+            letter={obj.letter}
             onDone={handleRemove}
             onTap={playPop}
           />
