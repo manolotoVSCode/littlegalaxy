@@ -11,11 +11,53 @@ interface Particle {
 const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"];
 const LIFETIME = 2500;
 
+// Cursor sound engine — continuous oscillator whose pitch tracks speed
+function createCursorSound() {
+  let ctx: AudioContext | null = null;
+  let osc: OscillatorNode | null = null;
+  let gain: GainNode | null = null;
+
+  function ensure() {
+    if (ctx) return;
+    ctx = new AudioContext();
+    osc = ctx.createOscillator();
+    gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = 200;
+    gain.gain.value = 0;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+  }
+
+  function update(speed: number) {
+    ensure();
+    if (!ctx || !osc || !gain) return;
+    if (ctx.state === "suspended") ctx.resume();
+    // Map speed (0-2000 px/s) to frequency (200-1200 Hz) and volume (0-0.15)
+    const clampedSpeed = Math.min(speed, 2000);
+    const freq = 200 + (clampedSpeed / 2000) * 1000;
+    const vol = Math.min(clampedSpeed / 2000, 1) * 0.15;
+    osc.frequency.setTargetAtTime(freq, ctx.currentTime, 0.05);
+    gain.gain.setTargetAtTime(vol, ctx.currentTime, 0.05);
+  }
+
+  function silence() {
+    if (gain && ctx) {
+      gain.gain.setTargetAtTime(0, ctx.currentTime, 0.1);
+    }
+  }
+
+  return { update, silence };
+}
+
 export default function RocketCursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [particles, setParticles] = useState<Particle[]>([]);
   const idRef = useRef(0);
   const frameRef = useRef(0);
+  const lastPosRef = useRef({ x: 0, y: 0, t: Date.now() });
+  const soundRef = useRef(createCursorSound());
+  const silenceTimer = useRef<ReturnType<typeof setTimeout>>();
 
   const handleMove = useCallback((e: MouseEvent | TouchEvent) => {
     const p = "touches" in e ? e.touches[0] : e;
@@ -23,6 +65,21 @@ export default function RocketCursor() {
     const x = p.clientX;
     const y = p.clientY;
     setPos({ x, y });
+
+    // Calculate speed
+    const now = Date.now();
+    const dt = (now - lastPosRef.current.t) / 1000; // seconds
+    if (dt > 0) {
+      const dx = x - lastPosRef.current.x;
+      const dy = y - lastPosRef.current.y;
+      const speed = Math.sqrt(dx * dx + dy * dy) / dt; // px/s
+      soundRef.current.update(speed);
+    }
+    lastPosRef.current = { x, y, t: now };
+
+    // Auto-silence after 150ms of no movement
+    clearTimeout(silenceTimer.current);
+    silenceTimer.current = setTimeout(() => soundRef.current.silence(), 150);
 
     // Add multiple particles per frame
     frameRef.current++;
