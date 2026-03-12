@@ -9,6 +9,7 @@ export default function StartOverlay({ onStart }: Props) {
   return (
     <motion.div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md overflow-y-auto cursor-default"
+      style={{ touchAction: "auto" }}
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
