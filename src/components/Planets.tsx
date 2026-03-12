@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
 
 const PLANETS = [
-  { emoji: "🪐", x: 5, y: 12, size: 48, duration: 18 },
-  { emoji: "🌍", x: 82, y: 68, size: 36, duration: 22 },
-  { emoji: "🌕", x: 92, y: 15, size: 30, duration: 15 },
-  { emoji: "🔴", x: 12, y: 78, size: 28, duration: 20 },
+  { emoji: "🪐", x: 5, y: 12, size: 80, duration: 40 },
+  { emoji: "🌕", x: 92, y: 15, size: 30, duration: 35 },
+  { emoji: "🔴", x: 12, y: 78, size: 28, duration: 38 },
 ];
 
 export default function Planets() {
