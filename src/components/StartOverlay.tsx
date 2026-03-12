@@ -8,12 +8,11 @@ interface Props {
 export default function StartOverlay({ onStart }: Props) {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto overscroll-y-contain bg-background/95 backdrop-blur-md cursor-default"
-      style={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch", height: "100dvh" }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-md overflow-y-auto cursor-default"
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="w-full max-w-2xl mx-auto px-5 pt-[calc(env(safe-area-inset-top)+1.25rem)] pb-[calc(env(safe-area-inset-bottom)+1.25rem)] md:px-6 md:pt-12 md:pb-12 flex flex-col gap-5 md:gap-8 items-center text-center min-h-[100dvh] justify-start md:justify-center">
+      <div className="w-full max-w-2xl mx-auto px-6 py-12 flex flex-col gap-8 items-center text-center">
         {/* Title */}
         <motion.div
           className="flex flex-col items-center gap-3"
@@ -24,12 +23,12 @@ export default function StartOverlay({ onStart }: Props) {
           <motion.img
             src={saturnLogo}
             alt="Saturn"
-            className="w-16 h-16 min-[360px]:w-20 min-[360px]:h-20 md:w-40 md:h-40 object-contain shrink-0"
+            className="w-16 h-16 md:w-40 md:h-40"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
           <h1
-            className="text-4xl min-[360px]:text-5xl md:text-7xl font-black tracking-tight"
+            className="text-5xl md:text-7xl font-black tracking-tight"
             style={{
               background: "linear-gradient(135deg, hsl(200 100% 70%), hsl(270 90% 75%), hsl(320 100% 70%))",
               WebkitBackgroundClip: "text",
@@ -85,7 +84,7 @@ export default function StartOverlay({ onStart }: Props) {
           transition={{ delay: 0.7, duration: 0.5 }}
         >
           <a
-            href="https://paypal.me/manoloto77"
+            href="https://www.paypal.com/donate/?business=manoloto%40hotmail.com&currency_code=MXN&item_name=Support+Little+Galaxy"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all"

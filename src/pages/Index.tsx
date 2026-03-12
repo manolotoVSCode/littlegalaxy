@@ -126,7 +126,6 @@ const Index = () => {
       style={{
         background:
           "linear-gradient(135deg, hsl(225 80% 6%), hsl(230 70% 10%), hsl(240 60% 12%), hsl(220 80% 8%))",
-        touchAction: started ? "none" : "auto",
       }}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
