@@ -18,7 +18,7 @@ export default function Satellite() {
       const sat: SatelliteObj = {
         id: satId++,
         y: 10 + Math.random() * 60,
-        duration: 6 + Math.random() * 6,
+        duration: 12 + Math.random() * 10,
         direction: Math.random() > 0.5 ? "ltr" : "rtl",
       };
       setSatellites((prev) => [...prev.slice(-2), sat]);

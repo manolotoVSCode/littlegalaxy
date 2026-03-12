@@ -20,9 +20,9 @@ export default function Planets() {
             lineHeight: 1,
           }}
           animate={{
-            y: [0, -12, 0, 12, 0],
-            x: [0, 6, 0, -6, 0],
-            rotate: [0, 5, 0, -5, 0],
+            y: [0, -6, 0, 6, 0],
+            x: [0, 3, 0, -3, 0],
+            rotate: [0, 2, 0, -2, 0],
           }}
           transition={{
             duration: p.duration,

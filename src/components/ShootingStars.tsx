@@ -29,7 +29,7 @@ export default function ShootingStars() {
       }, star.duration * 1000 + 200);
     };
 
-    const interval = setInterval(spawn, 3000 + Math.random() * 4000);
+    const interval = setInterval(spawn, 6000 + Math.random() * 6000);
     spawn();
     return () => clearInterval(interval);
   }, []);
