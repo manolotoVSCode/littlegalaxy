@@ -20,7 +20,13 @@ export default function StartOverlay({ onStart }: Props) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <img src={saturnLogo} alt="Saturn" className="w-16 h-16 md:w-40 md:h-40" />
+          <motion.img
+            src={saturnLogo}
+            alt="Saturn"
+            className="w-16 h-16 md:w-40 md:h-40"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
           <h1
             className="text-5xl md:text-7xl font-black tracking-tight"
             style={{
