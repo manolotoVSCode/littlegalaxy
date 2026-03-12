@@ -54,8 +54,8 @@ export default function BlackHoles() {
               }}
               transition={{
                 repeat: Infinity,
-                duration: 2 + i * 0.3,
-                delay: i * 0.4,
+                duration: 4 + i * 0.5,
+                delay: i * 0.6,
                 ease: "easeIn",
               }}
             />
