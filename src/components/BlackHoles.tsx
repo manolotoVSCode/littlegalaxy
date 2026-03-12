@@ -29,6 +29,17 @@ export default function BlackHoles() {
             transform: "translate(-50%, -50%)",
           }}
         >
+          {/* Background darkening near black hole */}
+          <div
+            className="absolute rounded-full"
+            style={{
+              width: h.size * 8,
+              height: h.size * 8,
+              left: -(h.size * 3.5),
+              top: -(h.size * 3.5),
+              background: `radial-gradient(circle, hsl(0 0% 0% / 0.6) 0%, hsl(0 0% 0% / 0.3) 30%, hsl(0 0% 0% / 0.1) 60%, transparent 100%)`,
+            }}
+          />
           {/* Light being sucked in — outer glow particles spiraling */}
           {[0, 1, 2, 3, 4, 5].map((i) => (
             <motion.div

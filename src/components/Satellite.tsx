@@ -38,8 +38,9 @@ export default function Satellite() {
         {satellites.map((s) => (
           <motion.div
             key={s.id}
-            className="absolute text-lg select-none"
-            style={{ top: `${s.y}%` }}
+            className="absolute select-none"
+            style={{ top: `${s.y}%`, fontSize: 80, lineHeight: 1 }}
+            
             initial={{
               x: s.direction === "ltr" ? "-5vw" : "105vw",
               opacity: 0,
