@@ -21,7 +21,7 @@ export default function ShootingStars() {
         x: Math.random() * 80 + 10,
         y: Math.random() * 40,
         angle: 25 + Math.random() * 20,
-        duration: 0.8 + Math.random() * 0.6,
+        duration: 1.5 + Math.random() * 1.0,
       };
       setStars((prev) => [...prev.slice(-3), star]);
       setTimeout(() => {
