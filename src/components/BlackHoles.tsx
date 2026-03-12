@@ -92,10 +92,10 @@ export default function BlackHoles() {
                 "conic-gradient(from 180deg, transparent 0%, hsl(270 90% 40% / 0.25) 20%, transparent 40%, hsl(280 80% 35% / 0.2) 60%, transparent 80%)",
               filter: "blur(2px)",
             }}
-            animate={{ rotate: [360, 0], scale: [0.95, 1.05, 0.95] }}
+            animate={{ rotate: [360, 0], scale: [0.97, 1.03, 0.97] }}
             transition={{
-              rotate: { repeat: Infinity, duration: 5, ease: "linear" },
-              scale: { repeat: Infinity, duration: 2.5, ease: "easeInOut" },
+              rotate: { repeat: Infinity, duration: 10, ease: "linear" },
+              scale: { repeat: Infinity, duration: 5, ease: "easeInOut" },
             }}
           />
 
