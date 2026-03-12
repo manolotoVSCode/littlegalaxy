@@ -103,6 +103,7 @@ const Index = () => {
       onTouchStart={handleTouch}
     >
       <StarField />
+      <Nebulas />
       <ShootingStars />
       <BlackHoles />
       <Planets />
