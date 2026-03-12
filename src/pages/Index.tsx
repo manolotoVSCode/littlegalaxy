@@ -168,12 +168,6 @@ const Index = () => {
             onDone={handleRemove}
             onTap={playPop}
           />
-        ))}
-            letter={obj.letter}
-            onDone={handleRemove}
-            onTap={playPop}
-          />
-        ))}
       </AnimatePresence>
 
       {started && <RocketCursor />}
