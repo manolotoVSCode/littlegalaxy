@@ -4,6 +4,7 @@ import StarField from "@/components/StarField";
 import ShootingStars from "@/components/ShootingStars";
 import BlackHoles from "@/components/BlackHoles";
 import Planets from "@/components/Planets";
+import Nebulas from "@/components/Nebulas";
 import Satellite from "@/components/Satellite";
 import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
@@ -102,6 +103,7 @@ const Index = () => {
       onTouchStart={handleTouch}
     >
       <StarField />
+      <Nebulas />
       <ShootingStars />
       <BlackHoles />
       <Planets />
