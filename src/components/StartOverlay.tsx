@@ -20,7 +20,7 @@ export default function StartOverlay({ onStart }: Props) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <span className="text-6xl md:text-7xl">🌌</span>
+          <img src={saturnLogo} alt="Saturn" className="w-16 h-16 md:w-20 md:h-20" />
           <h1
             className="text-5xl md:text-7xl font-black tracking-tight"
             style={{
