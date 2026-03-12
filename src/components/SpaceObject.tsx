@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 const OBJECTS_LEFT = [
   { emoji: "🪐", label: "planet" },
@@ -33,13 +34,15 @@ interface Props {
 }
 
 export default function SpaceObject({ x, y, id, variant, letter, onDone, onTap }: Props) {
+  const isSmall = useIsSmallScreen();
   const isLetter = variant === "letter" && letter;
 
   const obj = variant === "right"
     ? OBJECTS_RIGHT[Math.floor(Math.random() * OBJECTS_RIGHT.length)]
     : OBJECTS_LEFT[Math.floor(Math.random() * OBJECTS_LEFT.length)];
 
-  const size = isLetter ? 70 + Math.random() * 50 : 60 + Math.random() * 60;
+  const baseSize = isLetter ? 70 + Math.random() * 50 : 60 + Math.random() * 60;
+  const size = isSmall ? baseSize * 0.5 : baseSize;
   const color = LETTER_COLORS[Math.floor(Math.random() * LETTER_COLORS.length)];
   const rotation = variant === "right" ? (Math.random() - 0.5) * 60 : 0;
   const floatDir = variant === "right" ? (Math.random() - 0.5) * 150 : 0;

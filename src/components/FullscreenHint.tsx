@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FullscreenHint() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // Only show on devices with a keyboard (desktop)
+    const hasKeyboard = !("ontouchstart" in window) && window.innerWidth >= 1024;
+    if (!hasKeyboard) return;
+
+    setVisible(true);
     const timer = setTimeout(() => setVisible(false), 4000);
     return () => clearTimeout(timer);
   }, []);

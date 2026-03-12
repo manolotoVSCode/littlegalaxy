@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
 interface SatelliteObj {
   id: number;
@@ -12,6 +13,7 @@ let satId = 0;
 
 export default function Satellite() {
   const [satellites, setSatellites] = useState<SatelliteObj[]>([]);
+  const isSmall = useIsSmallScreen();
 
   useEffect(() => {
     const spawn = () => {
@@ -39,8 +41,7 @@ export default function Satellite() {
           <motion.div
             key={s.id}
             className="absolute select-none"
-            style={{ top: `${s.y}%`, fontSize: 80, lineHeight: 1 }}
-            
+            style={{ top: `${s.y}%`, fontSize: isSmall ? 36 : 80, lineHeight: 1 }}
             initial={{
               x: s.direction === "ltr" ? "-5vw" : "105vw",
               opacity: 0,
