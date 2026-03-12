@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
 
-const OBJECTS_LEFT = [
+export const OBJECTS_LEFT = [
   { emoji: "🪐", label: "planet" },
   { emoji: "👽", label: "alien" },
   { emoji: "⭐", label: "star" },
   { emoji: "🌍", label: "earth" },
 ];
 
-const OBJECTS_RIGHT = [
+export const OBJECTS_RIGHT = [
   { emoji: "🌈", label: "rainbow" },
   { emoji: "💫", label: "dizzy" },
   { emoji: "🎆", label: "fireworks" },
@@ -17,8 +17,7 @@ const OBJECTS_RIGHT = [
   { emoji: "🌺", label: "flower" },
 ];
 
-// Fancy letter styles
-const LETTER_COLORS = [
+export const LETTER_COLORS = [
   "#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb",
   "#ff4081", "#00bcd4", "#ffc107", "#8bc34a",
 ];

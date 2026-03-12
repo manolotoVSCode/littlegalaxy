@@ -19,6 +19,12 @@ interface SpawnedObject {
   y: number;
   variant: "left" | "right" | "letter";
   letter?: string;
+  emoji?: string;
+  emojiLabel?: string;
+  color?: string;
+  size: number;
+  rotation: number;
+  floatDir: number;
 }
 
 let objId = 0;
