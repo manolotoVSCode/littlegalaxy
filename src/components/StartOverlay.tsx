@@ -10,10 +10,18 @@ export default function StartOverlay({ onStart }: Props) {
     <motion.div
       className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
       style={{ touchAction: "pan-y" }}
+      onClick={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
       exit={{ opacity: 0, scale: 1.05 }}
       transition={{ duration: 0.4 }}
     >
-      <div className="mx-auto flex min-h-full w-full max-w-2xl flex-col items-center justify-start gap-8 px-6 pt-6 pb-12 text-center md:justify-center md:py-12">
+      <div
+        className="mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col items-center justify-start gap-6 px-5 pt-4 pb-10 text-center md:justify-center md:gap-8 md:px-6 md:py-12"
+        style={{
+          paddingTop: "max(env(safe-area-inset-top), 1rem)",
+          paddingBottom: "max(env(safe-area-inset-bottom), 2.5rem)",
+        }}
+      >
         {/* Title */}
         <motion.div
           className="flex flex-col items-center gap-3"
@@ -24,7 +32,7 @@ export default function StartOverlay({ onStart }: Props) {
           <motion.img
             src={saturnLogo}
             alt="Saturn"
-            className="w-16 h-16 md:w-40 md:h-40"
+            className="h-14 w-14 shrink-0 sm:h-16 sm:w-16 md:h-40 md:w-40"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />

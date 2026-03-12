@@ -127,9 +127,9 @@ const Index = () => {
         background:
           "linear-gradient(135deg, hsl(225 80% 6%), hsl(230 70% 10%), hsl(240 60% 12%), hsl(220 80% 8%))",
       }}
-      onClick={handleClick}
-      onContextMenu={handleContextMenu}
-      onTouchStart={handleTouch}
+      onClick={started ? handleClick : undefined}
+      onContextMenu={started ? handleContextMenu : undefined}
+      onTouchStart={started ? handleTouch : undefined}
     >
       <StarField />
       <Nebulas />
