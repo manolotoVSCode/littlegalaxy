@@ -19,6 +19,8 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,webp,woff,woff2}"],
         navigateFallbackDenylist: [/^\/~oauth/],
+        clientsClaim: true,
+        skipWaiting: true,
       },
       manifest: {
         name: "Little Galaxy — Space Adventure for Toddlers",
@@ -26,7 +28,7 @@ export default defineConfig(({ mode }) => ({
         description: "A free, magical space playground for little explorers.",
         theme_color: "#050a1a",
         background_color: "#050a1a",
-        display: "fullscreen",
+        display: "standalone",
         orientation: "any",
         start_url: "/",
         icons: [
