@@ -2,10 +2,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Capacitor } from "@capacitor/core";
 import saturnLogo from "@/assets/saturn-logo.png";
+import qrAppStore from "@/assets/qr-appstore.png";
 import ParentalGate from "@/components/ParentalGate";
+import SceneSelector from "@/components/SceneSelector";
+import { type SceneConfig } from "@/config/scenes";
 
 interface Props {
-  onStart: () => void;
+  onStart: (scene: SceneConfig) => void;
 }
 
 export default function StartOverlay({ onStart }: Props) {
@@ -13,12 +16,12 @@ export default function StartOverlay({ onStart }: Props) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-background cursor-default"
       style={{ touchAction: "pan-y" }}
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}
-      exit={{ opacity: 0, scale: 1.05 }}
-      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
     >
       <div
         className="mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col items-center justify-start gap-6 px-5 pt-4 pb-10 text-center md:justify-center md:gap-8 md:px-6 md:py-12"
@@ -62,34 +65,22 @@ export default function StartOverlay({ onStart }: Props) {
           Blast off into a magical, interactive space adventure! A sensory experience designed specifically for toddlers. Tap, play, and create vibrant planets with every click while enjoying celestial melodies. A safe, fun, and visually stunning cosmic playground for little explorers.
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.button
-          type="button"
-          onClick={() => {
-            if (!Capacitor.isNativePlatform()) {
-              document.documentElement.requestFullscreen?.().catch(() => {});
-            }
-            onStart();
-          }}
-          className="w-full max-w-sm rounded-2xl bg-primary/20 border border-primary/30 py-5 text-xl font-bold text-foreground hover:bg-primary/30 transition-colors cursor-pointer"
-          style={{
-            boxShadow: "0 0 30px hsl(270 80% 60% / 0.2), 0 0 60px hsl(270 80% 60% / 0.1)",
-          }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+        {/* Scene Selector — tap to launch directly */}
+        <motion.div
+          className="flex flex-col items-center gap-2"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Ready? Let's explore! 🚀
-        </motion.button>
+          <SceneSelector onSelect={onStart} />
+        </motion.div>
 
-        {/* Donate Button — prominent */}
+        {/* Donate Button */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
         >
           <button
             type="button"
@@ -128,10 +119,37 @@ export default function StartOverlay({ onStart }: Props) {
           className="mt-4 text-xs text-muted-foreground/60 max-w-lg leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 1.0 }}
         >
           A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
         </motion.footer>
+
+        {/* App Store */}
+        <motion.div
+          className="flex flex-col items-center gap-3 mt-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.5 }}
+        >
+          <a
+            href="https://apps.apple.com/app/id6760791741"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3 text-base font-semibold text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all"
+            style={{
+              boxShadow: "0 0 20px hsl(270 80% 60% / 0.15)",
+            }}
+          >
+            <span className="text-2xl"></span>
+            <span>Download on the App Store</span>
+          </a>
+          <img
+            src={qrAppStore}
+            alt="QR code to download on the App Store"
+            className="w-28 h-28 rounded-lg border border-primary/20"
+          />
+          <span className="text-xs text-muted-foreground/50">Scan to download on iPhone & iPad</span>
+        </motion.div>
       </div>
       <AnimatePresence>
         {showGate && (

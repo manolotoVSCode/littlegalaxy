@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Privacy() {
   return (
     <div
@@ -8,6 +10,10 @@ export default function Privacy() {
       }}
     >
       <div className="mx-auto max-w-2xl space-y-8">
+        <Link to="/" className="text-primary hover:underline text-sm inline-block">
+          ← Back to Little Galaxy
+        </Link>
+
         {/* Header */}
         <div className="space-y-2">
           <h1

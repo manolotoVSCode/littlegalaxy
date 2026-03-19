@@ -1,67 +1,43 @@
 import { useMemo } from "react";
 
-// Constellations defined as arrays of {x, y} percentage positions + connections
 const CONSTELLATIONS = [
   {
-    // Big Dipper (Ursa Major) — proper bowl + handle shape
     name: "Ursa Major",
     stars: [
-      { x: 18, y: 22 },  // bowl bottom-left
-      { x: 22, y: 22 },  // bowl bottom-right
-      { x: 23, y: 18 },  // bowl top-right
-      { x: 19, y: 18 },  // bowl top-left
-      { x: 26, y: 17 },  // handle 1
-      { x: 29, y: 15 },  // handle 2
-      { x: 32, y: 14 },  // handle 3
+      { x: 18, y: 22 }, { x: 22, y: 22 }, { x: 23, y: 18 }, { x: 19, y: 18 },
+      { x: 26, y: 17 }, { x: 29, y: 15 }, { x: 32, y: 14 },
     ],
-    connections: [
-      [0, 1], [1, 2], [2, 3], [3, 0], // bowl
-      [2, 4], [4, 5], [5, 6],         // handle
-    ],
+    connections: [[0, 1], [1, 2], [2, 3], [3, 0], [2, 4], [4, 5], [5, 6]],
   },
   {
-    // Little Dipper (Ursa Minor) — smaller bowl + handle, Polaris at tip
     name: "Ursa Minor",
     stars: [
-      { x: 74, y: 16 },  // bowl bottom-left
-      { x: 77, y: 16 },  // bowl bottom-right
-      { x: 78, y: 13 },  // bowl top-right
-      { x: 75, y: 13 },  // bowl top-left
-      { x: 73, y: 11 },  // handle 1
-      { x: 71, y: 9 },   // handle 2
-      { x: 70, y: 7 },   // Polaris
+      { x: 74, y: 16 }, { x: 77, y: 16 }, { x: 78, y: 13 }, { x: 75, y: 13 },
+      { x: 73, y: 11 }, { x: 71, y: 9 }, { x: 70, y: 7 },
     ],
-    connections: [
-      [0, 1], [1, 2], [2, 3], [3, 0], // bowl
-      [3, 4], [4, 5], [5, 6],         // handle to Polaris
-    ],
+    connections: [[0, 1], [1, 2], [2, 3], [3, 0], [3, 4], [4, 5], [5, 6]],
   },
   {
-    // Orion — shoulders, belt, feet
     name: "Orion",
     stars: [
-      { x: 48, y: 52 },  // left shoulder (Betelgeuse)
-      { x: 56, y: 52 },  // right shoulder (Bellatrix)
-      { x: 50, y: 58 },  // belt left (Alnitak)
-      { x: 52, y: 58 },  // belt center (Alnilam)
-      { x: 54, y: 58 },  // belt right (Mintaka)
-      { x: 49, y: 65 },  // left foot (Saiph)
-      { x: 56, y: 65 },  // right foot (Rigel)
+      { x: 48, y: 52 }, { x: 56, y: 52 }, { x: 50, y: 58 }, { x: 52, y: 58 },
+      { x: 54, y: 58 }, { x: 49, y: 65 }, { x: 56, y: 65 },
     ],
-    connections: [
-      [0, 1],             // shoulders
-      [0, 2],             // left shoulder to belt
-      [1, 4],             // right shoulder to belt
-      [2, 3], [3, 4],     // belt
-      [2, 5],             // belt to left foot
-      [4, 6],             // belt to right foot
-    ],
+    connections: [[0, 1], [0, 2], [1, 4], [2, 3], [3, 4], [2, 5], [4, 6]],
   },
 ];
 
 const STAR_COUNT = 100;
 
-export default function StarField() {
+interface Props {
+  starColor?: string;
+  constellationColor?: string;
+}
+
+export default function StarField({
+  starColor = "hsl(210 80% 85%)",
+  constellationColor = "hsl(210 60% 70% / 0.12)",
+}: Props) {
   const stars = useMemo(
     () =>
       Array.from({ length: STAR_COUNT }, (_, i) => ({
@@ -78,7 +54,6 @@ export default function StarField() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0">
-      {/* Random stars */}
       {stars.map((s) => (
         <div
           key={s.id}
@@ -96,11 +71,9 @@ export default function StarField() {
         />
       ))}
 
-      {/* Constellations */}
       <svg className="absolute inset-0 w-full h-full">
         {CONSTELLATIONS.map((c) => (
           <g key={c.name}>
-            {/* Connection lines */}
             {c.connections.map(([a, b], i) => (
               <line
                 key={`${c.name}-line-${i}`}
@@ -108,18 +81,17 @@ export default function StarField() {
                 y1={`${c.stars[a].y}%`}
                 x2={`${c.stars[b].x}%`}
                 y2={`${c.stars[b].y}%`}
-                stroke="hsl(210 60% 70% / 0.12)"
+                stroke={constellationColor}
                 strokeWidth="1"
               />
             ))}
-            {/* Constellation stars — brighter */}
             {c.stars.map((s, i) => (
               <circle
                 key={`${c.name}-star-${i}`}
                 cx={`${s.x}%`}
                 cy={`${s.y}%`}
                 r={i === 0 ? 3 : 2}
-                fill="hsl(210 80% 85%)"
+                fill={starColor}
                 className="animate-twinkle"
                 style={{
                   "--twinkle-duration": `${2.5 + Math.random() * 2}s`,

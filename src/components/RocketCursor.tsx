@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
+import type { SoundConfig } from "@/config/scenes";
 
 interface Particle {
   id: number;
@@ -8,11 +9,9 @@ interface Particle {
   born: number;
 }
 
-const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"];
 const LIFETIME = 2500;
 
-// Cursor sound engine — continuous oscillator whose pitch tracks speed
-function createCursorSound() {
+function createCursorSound(config: SoundConfig) {
   let ctx: AudioContext | null = null;
   let osc: OscillatorNode | null = null;
   let gain: GainNode | null = null;
@@ -22,8 +21,8 @@ function createCursorSound() {
     ctx = new AudioContext();
     osc = ctx.createOscillator();
     gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = 200;
+    osc.type = config.cursorOscType;
+    osc.frequency.value = config.cursorBaseFreq;
     gain.gain.value = 0;
     osc.connect(gain).connect(ctx.destination);
     osc.start();
@@ -33,10 +32,9 @@ function createCursorSound() {
     ensure();
     if (!ctx || !osc || !gain) return;
     if (ctx.state === "suspended") ctx.resume();
-    // Map speed (0-2000 px/s) to frequency (200-1200 Hz) and volume (0-0.15)
     const clampedSpeed = Math.min(speed, 2000);
-    const freq = 200 + (clampedSpeed / 2000) * 1000;
-    const vol = Math.min(clampedSpeed / 2000, 1) * 0.15;
+    const freq = config.cursorBaseFreq + (clampedSpeed / 2000) * config.cursorFreqRange;
+    const vol = Math.min(clampedSpeed / 2000, 1) * config.cursorMaxVol;
     osc.frequency.setTargetAtTime(freq, ctx.currentTime, 0.05);
     gain.gain.setTargetAtTime(vol, ctx.currentTime, 0.05);
   }
@@ -50,14 +48,42 @@ function createCursorSound() {
   return { update, silence };
 }
 
-export default function RocketCursor() {
+interface Props {
+  cursorEmoji?: string;
+  cursorSize?: string;
+  particleColors?: string[];
+  soundConfig?: SoundConfig;
+}
+
+export default function RocketCursor({
+  cursorEmoji = "🚀",
+  cursorSize = "text-6xl",
+  particleColors = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"],
+  soundConfig,
+}: Props) {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [particles, setParticles] = useState<Particle[]>([]);
   const idRef = useRef(0);
   const frameRef = useRef(0);
   const lastPosRef = useRef({ x: 0, y: 0, t: Date.now() });
-  const soundRef = useRef(createCursorSound());
+  const soundRef = useRef(soundConfig ? createCursorSound(soundConfig) : createCursorSound({
+    cursorOscType: "sine",
+    cursorBaseFreq: 200,
+    cursorFreqRange: 1000,
+    cursorMaxVol: 0.15,
+    oscType: "sine",
+    scale: [],
+    noteDuration: 0.6,
+    noteVolume: 0.3,
+  }));
   const silenceTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  // Update sound when config changes
+  useEffect(() => {
+    if (soundConfig) {
+      soundRef.current = createCursorSound(soundConfig);
+    }
+  }, [soundConfig]);
 
   const handleMove = useCallback((e: MouseEvent | TouchEvent) => {
     const p = "touches" in e ? e.touches[0] : e;
@@ -66,34 +92,31 @@ export default function RocketCursor() {
     const y = p.clientY;
     setPos({ x, y });
 
-    // Calculate speed
     const now = Date.now();
-    const dt = (now - lastPosRef.current.t) / 1000; // seconds
+    const dt = (now - lastPosRef.current.t) / 1000;
     if (dt > 0) {
       const dx = x - lastPosRef.current.x;
       const dy = y - lastPosRef.current.y;
-      const speed = Math.sqrt(dx * dx + dy * dy) / dt; // px/s
+      const speed = Math.sqrt(dx * dx + dy * dy) / dt;
       soundRef.current.update(speed);
     }
     lastPosRef.current = { x, y, t: now };
 
-    // Auto-silence after 150ms of no movement
     clearTimeout(silenceTimer.current);
     silenceTimer.current = setTimeout(() => soundRef.current.silence(), 150);
 
-    // Add multiple particles per frame
     frameRef.current++;
     if (frameRef.current % 2 === 0) {
       const newParticles: Particle[] = Array.from({ length: 3 }, () => ({
         id: idRef.current++,
         x: x + (Math.random() - 0.5) * 20,
         y: y + 20 + Math.random() * 14,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        color: particleColors[Math.floor(Math.random() * particleColors.length)],
         born: Date.now(),
       }));
       setParticles((prev) => [...prev.slice(-80), ...newParticles]);
     }
-  }, []);
+  }, [particleColors]);
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMove);
@@ -129,16 +152,16 @@ export default function RocketCursor() {
           />
         );
       })}
-      {/* Rocket cursor */}
       <div
-        className="absolute text-6xl"
+        className={`absolute ${cursorSize}`}
         style={{
           left: pos.x,
           top: pos.y,
-          transform: "translate(-50%, -50%) rotate(-45deg)",
+          transform: "translate(-50%, -50%)",
+          filter: "drop-shadow(0 0 15px rgba(255,255,255,0.5)) drop-shadow(0 0 30px rgba(255,255,255,0.3))",
         }}
       >
-        🚀
+        {cursorEmoji}
       </div>
     </div>
   );
