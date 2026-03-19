@@ -106,7 +106,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🦖",
     cursorSize: "text-7xl",
     description: "Stellar dinosaurs roam the cosmos",
-    flyingEmoji: "🦤",
+    flyingEmoji: "☄️",
     backgroundImage: bgDino,
     objectsLeft: [
       { emoji: "🦕", label: "sauropod" },
