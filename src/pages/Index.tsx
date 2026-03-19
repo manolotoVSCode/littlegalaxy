@@ -36,7 +36,7 @@ const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
-  const { playNote, playPop, unlock } = useSoundEngine();
+  const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
 
   const spawnObject = useCallback(
     (variant: "left" | "right" | "letter", clientX?: number, clientY?: number, letter?: string) => {
@@ -120,12 +120,19 @@ const Index = () => {
 
   return (
     <div
-      className="fixed inset-0 animate-bg-shift overflow-hidden cursor-none"
-      style={{ background: scene.background }}
+      className="fixed inset-0 overflow-hidden cursor-none"
       onClick={started ? handleClick : undefined}
       onContextMenu={started ? handleContextMenu : undefined}
       onTouchStart={started ? handleTouch : undefined}
     >
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${scene.backgroundImage})` }}
+      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/30" />
+
       <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
       <Nebulas />
       <ShootingStars />
@@ -169,7 +176,9 @@ const Index = () => {
       {started && (
         <RocketCursor
           cursorEmoji={scene.cursor}
+          cursorSize={scene.cursorSize}
           particleColors={scene.particleColors}
+          soundConfig={scene.sound}
         />
       )}
     </div>
