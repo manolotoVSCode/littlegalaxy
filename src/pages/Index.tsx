@@ -36,6 +36,7 @@ const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
   const [bgLoaded, setBgLoaded] = useState<string | null>(null);
+  const [isLoadingScene, setIsLoadingScene] = useState(false);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
   const startedRef = useRef(false);
