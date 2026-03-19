@@ -147,7 +147,7 @@ export const SCENES: SceneConfig[] = [
     id: "saturn",
     name: "Saturn Dreams",
     icon: "🪐",
-    cursor: "🫧",
+    cursor: "🛸",
     cursorSize: "text-7xl",
     description: "Discover life on Saturn's rings",
     flyingEmoji: "🛸",
