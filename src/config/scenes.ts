@@ -190,6 +190,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "💥",
     cursorSize: "text-7xl",
     description: "Galactic ships cross the stellar desert",
+    flyingEmoji: "🚀",
     backgroundImage: bgStarship,
     objectsLeft: [
       { emoji: "🚀", label: "rocket" },
