@@ -35,6 +35,7 @@ const LETTER_KEYS = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]$/;
 const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
+  const [bgReady, setBgReady] = useState(false);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
 
@@ -77,13 +78,39 @@ const Index = () => {
 
   const handleStart = useCallback((selectedScene: SceneConfig) => {
     unlock();
-    setScene(selectedScene);
-    setStarted(true);
+    // Preload the background image before showing
+    const img = new Image();
+    img.src = selectedScene.backgroundImage;
+    img.onload = () => {
+      setScene(selectedScene);
+      setBgReady(true);
+      setStarted(true);
+    };
+    // Fallback if image takes too long
+    setTimeout(() => {
+      setScene(selectedScene);
+      setBgReady(true);
+      setStarted(true);
+    }, 2000);
   }, [unlock]);
+
+  const handleReturnToSelector = useCallback(() => {
+    setStarted(false);
+    setBgReady(false);
+    setObjects([]);
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.().catch(() => {});
+    }
+  }, []);
 
   useEffect(() => {
     if (!started) return;
     const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleReturnToSelector();
+        return;
+      }
       e.preventDefault();
       if (LETTER_KEYS.test(e.key)) {
         spawnObject("letter", undefined, undefined, e.key);
@@ -93,7 +120,7 @@ const Index = () => {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [started, spawnObject]);
+  }, [started, spawnObject, handleReturnToSelector]);
 
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
@@ -125,20 +152,24 @@ const Index = () => {
       onContextMenu={started ? handleContextMenu : undefined}
       onTouchStart={started ? handleTouch : undefined}
     >
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${scene.backgroundImage})` }}
-      />
+      {/* Background: only show scene bg when ready */}
+      {started && bgReady && (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${scene.backgroundImage})` }}
+        />
+      )}
+      {/* Fallback dark bg always present */}
+      <div className="absolute inset-0 bg-background" style={{ zIndex: started && bgReady ? -1 : 0 }} />
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/30" />
+      {started && <div className="absolute inset-0 bg-black/30" />}
 
       <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
       <Nebulas />
       <ShootingStars />
       <BlackHoles />
       <Planets />
-      <Satellite />
+      {started && <Satellite emoji={scene.flyingEmoji} />}
 
       <AnimatePresence>
         {!started && <StartOverlay onStart={handleStart} />}
