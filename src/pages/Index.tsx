@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import StarField from "@/components/StarField";
 import ShootingStars from "@/components/ShootingStars";
@@ -35,9 +35,13 @@ const LETTER_KEYS = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]$/;
 const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
-  const [bgReady, setBgReady] = useState(false);
+  const [bgLoaded, setBgLoaded] = useState<string | null>(null);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
+  const startedRef = useRef(false);
+
+  // Keep ref in sync for fullscreenchange handler
+  useEffect(() => { startedRef.current = started; }, [started]);
 
   const spawnObject = useCallback(
     (variant: "left" | "right" | "letter", clientX?: number, clientY?: number, letter?: string) => {
@@ -46,10 +50,10 @@ const Index = () => {
       const y = clientY ?? Math.random() * (window.innerHeight - 100);
       const id = `obj-${objId++}`;
       const isSmall = window.innerWidth < 640;
-      const isLetter = variant === "letter" && letter;
 
       const pool = variant === "right" ? scene.objectsRight : scene.objectsLeft;
       const obj = pool[Math.floor(Math.random() * pool.length)];
+      const isLetter = variant === "letter" && letter;
       const baseSize = isLetter ? 70 + Math.random() * 50 : 60 + Math.random() * 60;
       const size = isSmall ? baseSize * 0.5 : baseSize;
       const color = scene.letterColors[Math.floor(Math.random() * scene.letterColors.length)];
@@ -76,39 +80,60 @@ const Index = () => {
     setObjects((prev) => prev.filter((o) => o.id !== id));
   }, []);
 
-  const handleStart = useCallback((selectedScene: SceneConfig) => {
-    unlock();
-    // Preload the background image before showing
-    const img = new Image();
-    img.src = selectedScene.backgroundImage;
-    img.onload = () => {
-      setScene(selectedScene);
-      setBgReady(true);
-      setStarted(true);
-    };
-    // Fallback if image takes too long
-    setTimeout(() => {
-      setScene(selectedScene);
-      setBgReady(true);
-      setStarted(true);
-    }, 2000);
-  }, [unlock]);
-
   const handleReturnToSelector = useCallback(() => {
     setStarted(false);
-    setBgReady(false);
+    setBgLoaded(null);
     setObjects([]);
-    if (document.fullscreenElement) {
-      document.exitFullscreen?.().catch(() => {});
-    }
   }, []);
+
+  const handleStart = useCallback((selectedScene: SceneConfig) => {
+    unlock();
+    setBgLoaded(null);
+    setScene(selectedScene);
+
+    if (selectedScene.backgroundImage) {
+      const img = new Image();
+      img.src = selectedScene.backgroundImage;
+      img.onload = () => {
+        setBgLoaded(selectedScene.backgroundImage);
+        setStarted(true);
+      };
+      // Fallback
+      const timer = setTimeout(() => {
+        setBgLoaded(selectedScene.backgroundImage);
+        setStarted(true);
+      }, 1500);
+      img.onload = () => {
+        clearTimeout(timer);
+        setBgLoaded(selectedScene.backgroundImage);
+        setStarted(true);
+      };
+    } else {
+      setStarted(true);
+    }
+  }, [unlock]);
+
+  // ESC key handler + fullscreenchange to catch browser ESC
+  useEffect(() => {
+    const onFullscreenChange = () => {
+      if (!document.fullscreenElement && startedRef.current) {
+        handleReturnToSelector();
+      }
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, [handleReturnToSelector]);
 
   useEffect(() => {
     if (!started) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        e.preventDefault();
-        handleReturnToSelector();
+        // Exit fullscreen first (which triggers fullscreenchange → return to selector)
+        if (document.fullscreenElement) {
+          document.exitFullscreen?.().catch(() => {});
+        } else {
+          handleReturnToSelector();
+        }
         return;
       }
       e.preventDefault();
@@ -145,6 +170,8 @@ const Index = () => {
     [spawnObject]
   );
 
+  const showBg = started && bgLoaded === scene.backgroundImage;
+
   return (
     <div
       className="fixed inset-0 overflow-hidden cursor-none"
@@ -152,17 +179,19 @@ const Index = () => {
       onContextMenu={started ? handleContextMenu : undefined}
       onTouchStart={started ? handleTouch : undefined}
     >
-      {/* Background: only show scene bg when ready */}
-      {started && bgReady && (
+      {/* Dark base always present */}
+      <div className="absolute inset-0 bg-background" />
+
+      {/* Scene background — only when loaded and matching current scene */}
+      {showBg && (
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-[0]"
           style={{ backgroundImage: `url(${scene.backgroundImage})` }}
         />
       )}
-      {/* Fallback dark bg always present */}
-      <div className="absolute inset-0 bg-background" style={{ zIndex: started && bgReady ? -1 : 0 }} />
+
       {/* Dark overlay for readability */}
-      {started && <div className="absolute inset-0 bg-black/30" />}
+      {started && <div className="absolute inset-0 bg-black/30 z-[0]" />}
 
       <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
       <Nebulas />
