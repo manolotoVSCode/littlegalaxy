@@ -61,6 +61,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🚀",
     cursorSize: "text-6xl",
     description: "The classic galaxy experience",
+    flyingEmoji: "🛰️",
     backgroundImage: bgCosmic,
     objectsLeft: [
       { emoji: "🪐", label: "planet" },
