@@ -307,6 +307,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(220 70% 85%)",
     constellationColor: "hsl(220 50% 60% / 0.15)",
+    showBlackHoles: true,
     sound: {
       oscType: "sine",
       scale: SCALE_COSMIC,
