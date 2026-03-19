@@ -178,9 +178,9 @@ export const SCENES: SceneConfig[] = [
       noteDuration: 1.0,
       noteVolume: 0.25,
       cursorOscType: "triangle",
-      cursorBaseFreq: 600,
-      cursorFreqRange: 600,
-      cursorMaxVol: 0.1,
+      cursorBaseFreq: 800,
+      cursorFreqRange: 1200,
+      cursorMaxVol: 0.12,
     },
   },
   {
