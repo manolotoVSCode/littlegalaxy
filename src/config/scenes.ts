@@ -39,6 +39,7 @@ export interface SceneConfig {
   particleColors: string[];
   starColor: string;
   constellationColor: string;
+  showBlackHoles: boolean;
   sound: SoundConfig;
 }
 
