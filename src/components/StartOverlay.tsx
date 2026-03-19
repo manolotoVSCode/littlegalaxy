@@ -1,17 +1,14 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import saturnLogo from "@/assets/saturn-logo.png";
 import qrAppStore from "@/assets/qr-appstore.png";
 import SceneSelector from "@/components/SceneSelector";
-import { DEFAULT_SCENE, type SceneConfig } from "@/config/scenes";
+import { type SceneConfig } from "@/config/scenes";
 
 interface Props {
   onStart: (scene: SceneConfig) => void;
 }
 
 export default function StartOverlay({ onStart }: Props) {
-  const [selectedScene, setSelectedScene] = useState<SceneConfig>(DEFAULT_SCENE);
-
   return (
     <motion.div
       className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
@@ -68,38 +65,15 @@ export default function StartOverlay({ onStart }: Props) {
           Blast off into a magical, interactive space adventure! A sensory experience designed specifically for toddlers. Tap, play, and create vibrant planets with every click while enjoying celestial melodies. A safe, fun, and visually stunning cosmic playground for little explorers.
         </motion.p>
 
-        {/* Scene Selector */}
+        {/* Scene Selector — tap to launch directly */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <SceneSelector
-            selected={selectedScene.id}
-            onSelect={setSelectedScene}
-          />
+          <SceneSelector onSelect={onStart} />
         </motion.div>
-
-        {/* CTA Button */}
-        <motion.button
-          type="button"
-          onClick={() => {
-            document.documentElement.requestFullscreen?.().catch(() => {});
-            onStart(selectedScene);
-          }}
-          className="w-full max-w-sm rounded-2xl bg-primary/20 border border-primary/30 py-5 text-xl font-bold text-foreground hover:bg-primary/30 transition-colors cursor-pointer"
-          style={{
-            boxShadow: "0 0 30px hsl(270 80% 60% / 0.2), 0 0 60px hsl(270 80% 60% / 0.1)",
-          }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          Enter {selectedScene.name} 🚀
-        </motion.button>
 
         {/* Donate Button */}
         <motion.div

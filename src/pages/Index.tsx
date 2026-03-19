@@ -166,7 +166,12 @@ const Index = () => {
         ))}
       </AnimatePresence>
 
-      {started && <RocketCursor />}
+      {started && (
+        <RocketCursor
+          cursorEmoji={scene.cursor}
+          particleColors={scene.particleColors}
+        />
+      )}
     </div>
   );
 };
