@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 import StarField from "@/components/StarField";
 import ShootingStars from "@/components/ShootingStars";
 import BlackHoles from "@/components/BlackHoles";
@@ -12,6 +13,7 @@ import StartOverlay from "@/components/StartOverlay";
 import NameStar from "@/components/NameStar";
 import FullscreenHint from "@/components/FullscreenHint";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
+import { useNativeSetup } from "@/hooks/useNativeSetup";
 
 interface SpawnedObject {
   id: string;
@@ -35,6 +37,7 @@ const Index = () => {
   const [started, setStarted] = useState(false);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine();
+  useNativeSetup();
 
   const spawnObject = useCallback(
     (variant: "left" | "right" | "letter", clientX?: number, clientY?: number, letter?: string) => {
@@ -62,6 +65,7 @@ const Index = () => {
 
       setObjects((prev) => [...prev.slice(-8), newObj]);
       playNote();
+      Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
 
       // Auto-remove after 5s to prevent accumulation
       setTimeout(() => {
@@ -114,8 +118,9 @@ const Index = () => {
 
   const handleTouch = useCallback(
     (e: React.TouchEvent) => {
-      const p = e.touches[0];
-      spawnObject("left", p.clientX, p.clientY);
+      Array.from(e.touches).forEach((p) => {
+        spawnObject("left", p.clientX, p.clientY);
+      });
     },
     [spawnObject]
   );

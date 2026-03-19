@@ -1,11 +1,16 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Capacitor } from "@capacitor/core";
 import saturnLogo from "@/assets/saturn-logo.png";
+import ParentalGate from "@/components/ParentalGate";
 
 interface Props {
   onStart: () => void;
 }
 
 export default function StartOverlay({ onStart }: Props) {
+  const [showGate, setShowGate] = useState(false);
+
   return (
     <motion.div
       className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
@@ -22,17 +27,12 @@ export default function StartOverlay({ onStart }: Props) {
           paddingBottom: "max(env(safe-area-inset-bottom), 2.5rem)",
         }}
       >
-        {/* Title */}
-        <motion.div
-          className="flex flex-col items-center gap-3"
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
+        {/* Saturn + title */}
+        <div className="flex flex-col items-center gap-3">
           <motion.img
             src={saturnLogo}
             alt="Saturn"
-            className="h-14 w-14 shrink-0 sm:h-16 sm:w-16 md:h-40 md:w-40"
+            className="h-36 w-36 sm:h-44 sm:w-44 shrink-0"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
@@ -50,14 +50,14 @@ export default function StartOverlay({ onStart }: Props) {
           <p className="text-sm text-muted-foreground tracking-widest uppercase">
             A cosmic playground for little explorers
           </p>
-        </motion.div>
+        </div>
 
         {/* Description */}
         <motion.p
           className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.4 }}
         >
           Blast off into a magical, interactive space adventure! A sensory experience designed specifically for toddlers. Tap, play, and create vibrant planets with every click while enjoying celestial melodies. A safe, fun, and visually stunning cosmic playground for little explorers.
         </motion.p>
@@ -66,7 +66,9 @@ export default function StartOverlay({ onStart }: Props) {
         <motion.button
           type="button"
           onClick={() => {
-            document.documentElement.requestFullscreen?.().catch(() => {});
+            if (!Capacitor.isNativePlatform()) {
+              document.documentElement.requestFullscreen?.().catch(() => {});
+            }
             onStart();
           }}
           className="w-full max-w-sm rounded-2xl bg-primary/20 border border-primary/30 py-5 text-xl font-bold text-foreground hover:bg-primary/30 transition-colors cursor-pointer"
@@ -77,7 +79,7 @@ export default function StartOverlay({ onStart }: Props) {
           whileTap={{ scale: 0.97 }}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         >
           Ready? Let's explore! 🚀
         </motion.button>
@@ -87,21 +89,38 @@ export default function StartOverlay({ onStart }: Props) {
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
         >
-          <a
-            href="https://paypal.me/manoloto77"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all"
+          <button
+            type="button"
+            onClick={() => setShowGate(true)}
+            className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all cursor-pointer"
             style={{
               boxShadow: "0 0 20px hsl(320 90% 60% / 0.15)",
             }}
           >
             <span className="text-2xl">☕</span>
             <span>Support this project — Buy me a coffee</span>
-          </a>
+          </button>
           <span className="text-xs text-muted-foreground/50">via PayPal · every little bit helps ❤️</span>
+        </motion.div>
+
+        {/* App Store QR — desktop only */}
+        <motion.div
+          className="hidden md:flex flex-col items-center gap-3"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.4 }}
+        >
+          <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+            <p className="text-xs text-muted-foreground/70 uppercase tracking-widest">Download on iPhone & iPad</p>
+            <img
+              src="/qr-appstore.png"
+              alt="Download Little Galaxy on the App Store"
+              className="w-24 h-24 rounded-lg opacity-90"
+            />
+            <p className="text-xs text-muted-foreground/50">Scan with your iPhone camera</p>
+          </div>
         </motion.div>
 
         {/* Footer */}
@@ -109,11 +128,22 @@ export default function StartOverlay({ onStart }: Props) {
           className="mt-4 text-xs text-muted-foreground/60 max-w-lg leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 0.3 }}
         >
           A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
         </motion.footer>
       </div>
+      <AnimatePresence>
+        {showGate && (
+          <ParentalGate
+            onSuccess={() => {
+              setShowGate(false);
+              window.open("https://paypal.me/manoloto77", "_blank", "noopener,noreferrer");
+            }}
+            onCancel={() => setShowGate(false)}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
