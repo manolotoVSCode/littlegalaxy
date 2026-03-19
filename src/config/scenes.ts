@@ -269,6 +269,49 @@ export const SCENES: SceneConfig[] = [
       cursorMaxVol: 0.1,
     },
   },
+  {
+    id: "classic",
+    name: "Deep Space",
+    icon: "🔭",
+    cursor: "🌟",
+    cursorSize: "text-6xl",
+    description: "The original dark cosmos experience",
+    backgroundImage: "",
+    flyingEmoji: "🛰️",
+    objectsLeft: [
+      { emoji: "🪐", label: "planet" },
+      { emoji: "🌍", label: "earth" },
+      { emoji: "🌙", label: "moon" },
+      { emoji: "☄️", label: "comet" },
+    ],
+    objectsRight: [
+      { emoji: "⭐", label: "star" },
+      { emoji: "💫", label: "dizzy" },
+      { emoji: "✨", label: "sparkle" },
+      { emoji: "🌟", label: "glow" },
+      { emoji: "🛸", label: "ufo" },
+      { emoji: "👽", label: "alien" },
+    ],
+    letterColors: [
+      "#b0c4ff", "#8ecaff", "#c3a6ff", "#a0d4ff", "#d0b8ff", "#7ec8e3",
+      "#9db8ff", "#b8d0ff", "#a8b4ff", "#c8d8ff",
+    ],
+    particleColors: [
+      "#b0c4ff", "#8ecaff", "#c3a6ff", "#a0d4ff", "#d0b8ff", "#7ec8e3", "#9db8ff", "#c8d8ff",
+    ],
+    starColor: "hsl(220 70% 85%)",
+    constellationColor: "hsl(220 50% 60% / 0.15)",
+    sound: {
+      oscType: "sine",
+      scale: SCALE_COSMIC,
+      noteDuration: 0.8,
+      noteVolume: 0.25,
+      cursorOscType: "sine",
+      cursorBaseFreq: 300,
+      cursorFreqRange: 800,
+      cursorMaxVol: 0.12,
+    },
+  },
 ];
 
 export const DEFAULT_SCENE = SCENES[0];
