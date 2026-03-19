@@ -10,6 +10,7 @@ import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import AppDownloadPopup from "@/components/AppDownloadPopup";
 import NameStar from "@/components/NameStar";
 import FullscreenHint from "@/components/FullscreenHint";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
