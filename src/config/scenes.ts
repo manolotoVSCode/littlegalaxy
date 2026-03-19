@@ -31,6 +31,8 @@ export interface SceneConfig {
   cursorSize: string;
   description: string;
   backgroundImage: string;
+  /** Emoji for flying ambient objects (satellite-like) */
+  flyingEmoji: string;
   objectsLeft: { emoji: string; label: string }[];
   objectsRight: { emoji: string; label: string }[];
   letterColors: string[];
