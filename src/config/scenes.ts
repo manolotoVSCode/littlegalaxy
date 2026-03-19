@@ -219,6 +219,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(20 70% 75%)",
     constellationColor: "hsl(20 50% 50% / 0.12)",
+    showBlackHoles: false,
     sound: {
       oscType: "square",
       scale: SCALE_STARSHIP,
