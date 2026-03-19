@@ -147,6 +147,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🫧",
     cursorSize: "text-7xl",
     description: "Discover life on Saturn's rings",
+    flyingEmoji: "🛸",
     backgroundImage: bgSaturn,
     objectsLeft: [
       { emoji: "🛸", label: "ufo" },
