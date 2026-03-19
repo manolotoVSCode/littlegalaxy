@@ -229,10 +229,11 @@ export const SCENES: SceneConfig[] = [
   {
     id: "electric",
     name: "Electric Universe",
-    icon: "⚡",
+    icon: "⚛️",
     cursor: "⚛️",
     cursorSize: "text-7xl",
     description: "A world of ions and energy",
+    flyingEmoji: "🔬",
     backgroundImage: bgElectric,
     objectsLeft: [
       { emoji: "⚡", label: "bolt" },
