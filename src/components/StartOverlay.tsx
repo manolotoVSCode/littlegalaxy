@@ -1,12 +1,17 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import saturnLogo from "@/assets/saturn-logo.png";
 import qrAppStore from "@/assets/qr-appstore.png";
+import SceneSelector from "@/components/SceneSelector";
+import { DEFAULT_SCENE, type SceneConfig } from "@/config/scenes";
 
 interface Props {
-  onStart: () => void;
+  onStart: (scene: SceneConfig) => void;
 }
 
 export default function StartOverlay({ onStart }: Props) {
+  const [selectedScene, setSelectedScene] = useState<SceneConfig>(DEFAULT_SCENE);
+
   return (
     <motion.div
       className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
@@ -63,12 +68,25 @@ export default function StartOverlay({ onStart }: Props) {
           Blast off into a magical, interactive space adventure! A sensory experience designed specifically for toddlers. Tap, play, and create vibrant planets with every click while enjoying celestial melodies. A safe, fun, and visually stunning cosmic playground for little explorers.
         </motion.p>
 
+        {/* Scene Selector */}
+        <motion.div
+          className="flex flex-col items-center gap-2"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <SceneSelector
+            selected={selectedScene.id}
+            onSelect={setSelectedScene}
+          />
+        </motion.div>
+
         {/* CTA Button */}
         <motion.button
           type="button"
           onClick={() => {
             document.documentElement.requestFullscreen?.().catch(() => {});
-            onStart();
+            onStart(selectedScene);
           }}
           className="w-full max-w-sm rounded-2xl bg-primary/20 border border-primary/30 py-5 text-xl font-bold text-foreground hover:bg-primary/30 transition-colors cursor-pointer"
           style={{
@@ -78,17 +96,17 @@ export default function StartOverlay({ onStart }: Props) {
           whileTap={{ scale: 0.97 }}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
-          Ready? Let's explore! 🚀
+          Enter {selectedScene.name} 🚀
         </motion.button>
 
-        {/* Donate Button — prominent */}
+        {/* Donate Button */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
         >
           <a
             href="https://paypal.me/manoloto77"
@@ -110,7 +128,7 @@ export default function StartOverlay({ onStart }: Props) {
           className="mt-4 text-xs text-muted-foreground/60 max-w-lg leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 1.0 }}
         >
           A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
         </motion.footer>
@@ -120,7 +138,7 @@ export default function StartOverlay({ onStart }: Props) {
           className="flex flex-col items-center gap-3 mt-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.5 }}
+          transition={{ delay: 1.1, duration: 0.5 }}
         >
           <a
             href="https://apps.apple.com/app/id6760791741"

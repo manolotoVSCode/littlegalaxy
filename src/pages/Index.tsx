@@ -6,12 +6,13 @@ import BlackHoles from "@/components/BlackHoles";
 import Planets from "@/components/Planets";
 import Nebulas from "@/components/Nebulas";
 import Satellite from "@/components/Satellite";
-import SpaceObject, { OBJECTS_LEFT, OBJECTS_RIGHT, LETTER_COLORS } from "@/components/SpaceObject";
+import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
 import NameStar from "@/components/NameStar";
 import FullscreenHint from "@/components/FullscreenHint";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
+import { DEFAULT_SCENE, type SceneConfig } from "@/config/scenes";
 
 interface SpawnedObject {
   id: string;
@@ -33,6 +34,7 @@ const LETTER_KEYS = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]$/;
 
 const Index = () => {
   const [started, setStarted] = useState(false);
+  const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine();
 
@@ -45,12 +47,11 @@ const Index = () => {
       const isSmall = window.innerWidth < 640;
       const isLetter = variant === "letter" && letter;
 
-      // Pre-compute random values so they don't change on re-render
-      const pool = variant === "right" ? OBJECTS_RIGHT : OBJECTS_LEFT;
+      const pool = variant === "right" ? scene.objectsRight : scene.objectsLeft;
       const obj = pool[Math.floor(Math.random() * pool.length)];
       const baseSize = isLetter ? 70 + Math.random() * 50 : 60 + Math.random() * 60;
       const size = isSmall ? baseSize * 0.5 : baseSize;
-      const color = LETTER_COLORS[Math.floor(Math.random() * LETTER_COLORS.length)];
+      const color = scene.letterColors[Math.floor(Math.random() * scene.letterColors.length)];
       const rotation = variant === "right" ? (Math.random() - 0.5) * 60 : 0;
       const floatDir = variant === "right" ? (Math.random() - 0.5) * 150 : 0;
 
@@ -63,24 +64,23 @@ const Index = () => {
       setObjects((prev) => [...prev.slice(-8), newObj]);
       playNote();
 
-      // Auto-remove after 5s to prevent accumulation
       setTimeout(() => {
         setObjects((prev) => prev.filter((o) => o.id !== id));
       }, 5000);
     },
-    [started, playNote]
+    [started, playNote, scene]
   );
 
   const handleRemove = useCallback((id: string) => {
     setObjects((prev) => prev.filter((o) => o.id !== id));
   }, []);
 
-  const handleStart = useCallback(() => {
+  const handleStart = useCallback((selectedScene: SceneConfig) => {
     unlock();
+    setScene(selectedScene);
     setStarted(true);
   }, [unlock]);
 
-  // Key handler — letters spawn fancy letters, others spawn objects
   useEffect(() => {
     if (!started) return;
     const handler = (e: KeyboardEvent) => {
@@ -95,10 +95,8 @@ const Index = () => {
     return () => window.removeEventListener("keydown", handler);
   }, [started, spawnObject]);
 
-  // Click handler — left vs right
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
-      // Right click handled in context menu
       spawnObject("left", e.clientX, e.clientY);
     },
     [spawnObject]
@@ -123,15 +121,12 @@ const Index = () => {
   return (
     <div
       className="fixed inset-0 animate-bg-shift overflow-hidden cursor-none"
-      style={{
-        background:
-          "linear-gradient(135deg, hsl(225 80% 6%), hsl(230 70% 10%), hsl(240 60% 12%), hsl(220 80% 8%))",
-      }}
+      style={{ background: scene.background }}
       onClick={started ? handleClick : undefined}
       onContextMenu={started ? handleContextMenu : undefined}
       onTouchStart={started ? handleTouch : undefined}
     >
-      <StarField />
+      <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
       <Nebulas />
       <ShootingStars />
       <BlackHoles />
