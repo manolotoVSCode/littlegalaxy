@@ -83,30 +83,38 @@ const Index = () => {
 
   const handleReturnToSelector = useCallback(() => {
     setStarted(false);
+    setIsLoadingScene(false);
     setBgLoaded(null);
     setObjects([]);
   }, []);
 
   const handleStart = useCallback((selectedScene: SceneConfig) => {
     unlock();
-    setScene(selectedScene);
+    setIsLoadingScene(true);
+    setBgLoaded(null);
+    setObjects([]);
 
     if (selectedScene.backgroundImage) {
-      // Preload image BEFORE showing the scene
       const img = new Image();
       img.src = selectedScene.backgroundImage;
+
       const show = () => {
+        setScene(selectedScene);
         setBgLoaded(selectedScene.backgroundImage);
         setStarted(true);
+        setIsLoadingScene(false);
       };
-      img.onload = show;
-      // Fallback if image takes too long
-      const timer = setTimeout(show, 3000);
-      img.onload = () => { clearTimeout(timer); show(); };
+
+      const timer = window.setTimeout(show, 3000);
+      img.onload = () => {
+        clearTimeout(timer);
+        show();
+      };
     } else {
-      // No background image (e.g. Deep Space) — start immediately
-      setBgLoaded(null);
+      setScene(selectedScene);
       setStarted(true);
+      setBgLoaded(null);
+      setIsLoadingScene(false);
     }
   }, [unlock]);
 
