@@ -1,29 +1,5 @@
 import { motion } from "framer-motion";
 
-// Re-export for backward compat (used by scenes config now)
-export { OBJECTS_LEFT, OBJECTS_RIGHT, LETTER_COLORS } from "@/config/scenes-compat";
-
-export const OBJECTS_LEFT = [
-  { emoji: "🪐", label: "planet" },
-  { emoji: "👽", label: "alien" },
-  { emoji: "⭐", label: "star" },
-  { emoji: "🌍", label: "earth" },
-];
-
-export const OBJECTS_RIGHT = [
-  { emoji: "🌈", label: "rainbow" },
-  { emoji: "💫", label: "dizzy" },
-  { emoji: "🎆", label: "fireworks" },
-  { emoji: "🦄", label: "unicorn" },
-  { emoji: "🎉", label: "party" },
-  { emoji: "🌺", label: "flower" },
-];
-
-export const LETTER_COLORS = [
-  "#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb",
-  "#ff4081", "#00bcd4", "#ffc107", "#8bc34a",
-];
-
 interface Props {
   x: number;
   y: number;
