@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import saturnLogo from "@/assets/saturn-logo.png";
+import qrAppStore from "@/assets/qr-appstore.png";
 
 interface Props {
   onStart: () => void;
@@ -82,12 +83,39 @@ export default function StartOverlay({ onStart }: Props) {
           Ready? Let's explore! 🚀
         </motion.button>
 
+        {/* App Store Button */}
+        <motion.div
+          className="flex flex-col items-center gap-3"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65, duration: 0.5 }}
+        >
+          <a
+            href="https://apps.apple.com/app/id6760791741"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3 text-base font-semibold text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all"
+            style={{
+              boxShadow: "0 0 20px hsl(270 80% 60% / 0.15)",
+            }}
+          >
+            <span className="text-2xl"></span>
+            <span>Download on the App Store</span>
+          </a>
+          <img
+            src={qrAppStore}
+            alt="QR code to download on the App Store"
+            className="w-28 h-28 rounded-lg border border-primary/20"
+          />
+          <span className="text-xs text-muted-foreground/50">Scan to download on iPhone & iPad</span>
+        </motion.div>
+
         {/* Donate Button — prominent */}
         <motion.div
           className="flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.5 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
         >
           <a
             href="https://paypal.me/manoloto77"
