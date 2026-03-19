@@ -101,9 +101,10 @@ export const SCENES: SceneConfig[] = [
     id: "dino",
     name: "Dino Nebula",
     icon: "🦕",
-    cursor: "🦶",
+    cursor: "🦖",
     cursorSize: "text-7xl",
     description: "Stellar dinosaurs roam the cosmos",
+    flyingEmoji: "🦅",
     backgroundImage: bgDino,
     objectsLeft: [
       { emoji: "🦕", label: "sauropod" },
