@@ -2,11 +2,13 @@ export interface SceneConfig {
   id: string;
   name: string;
   icon: string;
+  cursor: string;
   description: string;
   background: string;
   objectsLeft: { emoji: string; label: string }[];
   objectsRight: { emoji: string; label: string }[];
   letterColors: string[];
+  particleColors: string[];
   starColor: string;
   constellationColor: string;
 }
