@@ -106,7 +106,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🦖",
     cursorSize: "text-7xl",
     description: "Stellar dinosaurs roam the cosmos",
-    flyingEmoji: "🦅",
+    flyingEmoji: "🦤",
     backgroundImage: bgDino,
     objectsLeft: [
       { emoji: "🦕", label: "sauropod" },
@@ -147,7 +147,7 @@ export const SCENES: SceneConfig[] = [
     id: "saturn",
     name: "Saturn Dreams",
     icon: "🪐",
-    cursor: "🫧",
+    cursor: "🛸",
     cursorSize: "text-7xl",
     description: "Discover life on Saturn's rings",
     flyingEmoji: "🛸",
@@ -234,8 +234,8 @@ export const SCENES: SceneConfig[] = [
   {
     id: "electric",
     name: "Electric Universe",
-    icon: "⚛️",
-    cursor: "⚛️",
+    icon: "⚛",
+    cursor: "⚛",
     cursorSize: "text-7xl",
     description: "A world of ions and energy",
     flyingEmoji: "🔬",

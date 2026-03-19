@@ -11,7 +11,7 @@ interface Props {
 export default function StartOverlay({ onStart }: Props) {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] overflow-y-auto bg-background/95 backdrop-blur-md cursor-default"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-background cursor-default"
       style={{ touchAction: "pan-y" }}
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}

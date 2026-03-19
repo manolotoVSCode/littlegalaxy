@@ -36,6 +36,7 @@ const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
   const [bgLoaded, setBgLoaded] = useState<string | null>(null);
+  const [isLoadingScene, setIsLoadingScene] = useState(false);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
   const startedRef = useRef(false);
@@ -82,30 +83,38 @@ const Index = () => {
 
   const handleReturnToSelector = useCallback(() => {
     setStarted(false);
+    setIsLoadingScene(false);
     setBgLoaded(null);
     setObjects([]);
   }, []);
 
   const handleStart = useCallback((selectedScene: SceneConfig) => {
     unlock();
-    setScene(selectedScene);
+    setIsLoadingScene(true);
+    setBgLoaded(null);
+    setObjects([]);
 
     if (selectedScene.backgroundImage) {
-      // Preload image BEFORE showing the scene
       const img = new Image();
       img.src = selectedScene.backgroundImage;
+
       const show = () => {
+        setScene(selectedScene);
         setBgLoaded(selectedScene.backgroundImage);
         setStarted(true);
+        setIsLoadingScene(false);
       };
-      img.onload = show;
-      // Fallback if image takes too long
-      const timer = setTimeout(show, 3000);
-      img.onload = () => { clearTimeout(timer); show(); };
+
+      const timer = window.setTimeout(show, 3000);
+      img.onload = () => {
+        clearTimeout(timer);
+        show();
+      };
     } else {
-      // No background image (e.g. Deep Space) — start immediately
-      setBgLoaded(null);
+      setScene(selectedScene);
       setStarted(true);
+      setBgLoaded(null);
+      setIsLoadingScene(false);
     }
   }, [unlock]);
 
@@ -189,15 +198,19 @@ const Index = () => {
       {/* Dark overlay for readability */}
       {started && <div className="absolute inset-0 bg-black/30 z-[0]" />}
 
-      <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
-      <Nebulas />
-      <ShootingStars />
-      {scene.showBlackHoles && <BlackHoles />}
-      <Planets />
-      {started && <Satellite emoji={scene.flyingEmoji} />}
+      {started && (
+        <>
+          <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
+          <Nebulas />
+          <ShootingStars />
+          {scene.showBlackHoles && <BlackHoles />}
+          <Planets />
+          <Satellite emoji={scene.flyingEmoji} />
+        </>
+      )}
 
       <AnimatePresence>
-        {!started && <StartOverlay onStart={handleStart} />}
+        {(!started || isLoadingScene) && <StartOverlay onStart={handleStart} />}
       </AnimatePresence>
 
       {started && (
