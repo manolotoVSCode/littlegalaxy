@@ -9,6 +9,7 @@ import Satellite from "@/components/Satellite";
 import SpaceObject from "@/components/SpaceObject";
 import RocketCursor from "@/components/RocketCursor";
 import StartOverlay from "@/components/StartOverlay";
+import LoadingOverlay from "@/components/LoadingOverlay";
 import NameStar from "@/components/NameStar";
 import FullscreenHint from "@/components/FullscreenHint";
 import { useSoundEngine } from "@/hooks/useSoundEngine";
@@ -35,14 +36,16 @@ const LETTER_KEYS = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]$/;
 const Index = () => {
   const [started, setStarted] = useState(false);
   const [scene, setScene] = useState<SceneConfig>(DEFAULT_SCENE);
+  const [pendingScene, setPendingScene] = useState<SceneConfig | null>(null);
   const [bgLoaded, setBgLoaded] = useState<string | null>(null);
   const [isLoadingScene, setIsLoadingScene] = useState(false);
   const [objects, setObjects] = useState<SpawnedObject[]>([]);
   const { playNote, playPop, unlock } = useSoundEngine(scene.sound);
   const startedRef = useRef(false);
 
-  // Keep ref in sync for fullscreenchange handler
-  useEffect(() => { startedRef.current = started; }, [started]);
+  useEffect(() => {
+    startedRef.current = started;
+  }, [started]);
 
   const spawnObject = useCallback(
     (variant: "left" | "right" | "letter", clientX?: number, clientY?: number, letter?: string) => {
@@ -62,15 +65,23 @@ const Index = () => {
       const floatDir = variant === "right" ? (Math.random() - 0.5) * 150 : 0;
 
       const newObj: SpawnedObject = {
-        id, x, y, variant, letter,
-        emoji: obj.emoji, emojiLabel: obj.label,
-        color, size, rotation, floatDir,
+        id,
+        x,
+        y,
+        variant,
+        letter,
+        emoji: obj.emoji,
+        emojiLabel: obj.label,
+        color,
+        size,
+        rotation,
+        floatDir,
       };
 
       setObjects((prev) => [...prev.slice(-8), newObj]);
       playNote();
 
-      setTimeout(() => {
+      window.setTimeout(() => {
         setObjects((prev) => prev.filter((o) => o.id !== id));
       }, 5000);
     },
@@ -83,48 +94,58 @@ const Index = () => {
 
   const handleReturnToSelector = useCallback(() => {
     setStarted(false);
+    setPendingScene(null);
     setIsLoadingScene(false);
     setBgLoaded(null);
     setObjects([]);
   }, []);
 
+  const revealScene = useCallback((selectedScene: SceneConfig) => {
+    setScene(selectedScene);
+    setBgLoaded(selectedScene.backgroundImage || null);
+    setStarted(true);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.setTimeout(() => setIsLoadingScene(false), 120);
+      });
+    });
+  }, []);
+
   const handleStart = useCallback((selectedScene: SceneConfig) => {
     unlock();
+    setPendingScene(selectedScene);
     setIsLoadingScene(true);
     setBgLoaded(null);
     setObjects([]);
 
-    if (selectedScene.backgroundImage) {
-      const img = new Image();
-      img.src = selectedScene.backgroundImage;
-
-      const show = () => {
-        setScene(selectedScene);
-        setBgLoaded(selectedScene.backgroundImage);
-        setStarted(true);
-        setIsLoadingScene(false);
-      };
-
-      const timer = window.setTimeout(show, 3000);
-      img.onload = () => {
-        clearTimeout(timer);
-        show();
-      };
-    } else {
-      setScene(selectedScene);
-      setStarted(true);
-      setBgLoaded(null);
-      setIsLoadingScene(false);
+    if (!selectedScene.backgroundImage) {
+      revealScene(selectedScene);
+      return;
     }
-  }, [unlock]);
 
-  // ESC key handler + fullscreenchange to catch browser ESC
+    const img = new Image();
+    img.src = selectedScene.backgroundImage;
+
+    const finalize = () => revealScene(selectedScene);
+
+    if (typeof img.decode === "function") {
+      img.decode().then(finalize).catch(() => {
+        if (img.complete) finalize();
+        else img.onload = finalize;
+      });
+    } else {
+      img.onload = finalize;
+    }
+  }, [revealScene, unlock]);
+
   useEffect(() => {
     const onFullscreenChange = () => {
       if (!document.fullscreenElement && startedRef.current) {
         handleReturnToSelector();
       }
     };
+
     document.addEventListener("fullscreenchange", onFullscreenChange);
     return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
   }, [handleReturnToSelector]);
@@ -133,7 +154,6 @@ const Index = () => {
     if (!started) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        // Exit fullscreen first (which triggers fullscreenchange → return to selector)
         if (document.fullscreenElement) {
           document.exitFullscreen?.().catch(() => {});
         } else {
@@ -141,6 +161,7 @@ const Index = () => {
         }
         return;
       }
+
       e.preventDefault();
       if (LETTER_KEYS.test(e.key)) {
         spawnObject("letter", undefined, undefined, e.key);
@@ -148,6 +169,7 @@ const Index = () => {
         spawnObject("left");
       }
     };
+
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [started, spawnObject, handleReturnToSelector]);
@@ -175,7 +197,7 @@ const Index = () => {
     [spawnObject]
   );
 
-  const showBg = started && bgLoaded === scene.backgroundImage;
+  const showBg = started && (!!scene.backgroundImage ? bgLoaded === scene.backgroundImage : true);
 
   return (
     <div
@@ -184,19 +206,16 @@ const Index = () => {
       onContextMenu={started ? handleContextMenu : undefined}
       onTouchStart={started ? handleTouch : undefined}
     >
-      {/* Dark base always present */}
       <div className="absolute inset-0 bg-background" />
 
-      {/* Scene background — only when loaded and matching current scene */}
-      {showBg && (
+      {showBg && scene.backgroundImage && (
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-[0]"
+          className="absolute inset-0 z-[0] bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${scene.backgroundImage})` }}
         />
       )}
 
-      {/* Dark overlay for readability */}
-      {started && <div className="absolute inset-0 bg-black/30 z-[0]" />}
+      {started && <div className="absolute inset-0 z-[0] bg-black/30" />}
 
       {started && (
         <>
@@ -210,7 +229,11 @@ const Index = () => {
       )}
 
       <AnimatePresence>
-        {(!started || isLoadingScene) && <StartOverlay onStart={handleStart} />}
+        {!started && !isLoadingScene && <StartOverlay onStart={handleStart} />}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isLoadingScene && pendingScene && <LoadingOverlay scene={pendingScene} />}
       </AnimatePresence>
 
       {started && (
