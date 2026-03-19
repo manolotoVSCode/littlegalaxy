@@ -15,8 +15,8 @@ export default function StartOverlay({ onStart }: Props) {
       style={{ touchAction: "pan-y" }}
       onClick={(e) => e.stopPropagation()}
       onTouchStart={(e) => e.stopPropagation()}
-      exit={{ opacity: 0, scale: 1.05 }}
-      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0 }}
     >
       <div
         className="mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col items-center justify-start gap-6 px-5 pt-4 pb-10 text-center md:justify-center md:gap-8 md:px-6 md:py-12"
