@@ -62,7 +62,7 @@ export default function SceneSelector({ onSelect }: Props) {
               animate={{ y: [0, -4, 0] }}
               transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
             >
-              {scene.icon}
+              {scene.cursor}
             </motion.span>
             <span className="text-xs font-semibold text-foreground/90 z-10 leading-tight text-center">
               {scene.name}
