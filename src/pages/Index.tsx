@@ -107,7 +107,7 @@ const Index = () => {
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        window.setTimeout(() => setIsLoadingScene(false), 120);
+        setIsLoadingScene(false);
       });
     });
   }, []);
