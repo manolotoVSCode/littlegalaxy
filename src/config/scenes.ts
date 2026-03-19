@@ -39,6 +39,7 @@ export interface SceneConfig {
   particleColors: string[];
   starColor: string;
   constellationColor: string;
+  showBlackHoles: boolean;
   sound: SoundConfig;
 }
 
@@ -86,6 +87,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(210 80% 85%)",
     constellationColor: "hsl(210 60% 70% / 0.12)",
+    showBlackHoles: true,
     sound: {
       oscType: "sine",
       scale: SCALE_COSMIC,
@@ -129,6 +131,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(280 70% 80%)",
     constellationColor: "hsl(290 50% 60% / 0.15)",
+    showBlackHoles: false,
     sound: {
       oscType: "sawtooth",
       scale: SCALE_DINO,
@@ -172,6 +175,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(40 80% 80%)",
     constellationColor: "hsl(40 60% 60% / 0.12)",
+    showBlackHoles: false,
     sound: {
       oscType: "triangle",
       scale: SCALE_SATURN,
@@ -215,6 +219,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(20 70% 75%)",
     constellationColor: "hsl(20 50% 50% / 0.12)",
+    showBlackHoles: false,
     sound: {
       oscType: "square",
       scale: SCALE_STARSHIP,
@@ -258,6 +263,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(190 90% 80%)",
     constellationColor: "hsl(190 70% 60% / 0.15)",
+    showBlackHoles: false,
     sound: {
       oscType: "square",
       scale: SCALE_ELECTRIC,
@@ -301,6 +307,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(220 70% 85%)",
     constellationColor: "hsl(220 50% 60% / 0.15)",
+    showBlackHoles: true,
     sound: {
       oscType: "sine",
       scale: SCALE_COSMIC,

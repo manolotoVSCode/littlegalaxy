@@ -196,7 +196,7 @@ const Index = () => {
       <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
       <Nebulas />
       <ShootingStars />
-      <BlackHoles />
+      {scene.showBlackHoles && <BlackHoles />}
       <Planets />
       {started && <Satellite emoji={scene.flyingEmoji} />}
 
