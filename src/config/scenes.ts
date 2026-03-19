@@ -92,9 +92,9 @@ export const SCENES: SceneConfig[] = [
       noteDuration: 0.6,
       noteVolume: 0.3,
       cursorOscType: "sine",
-      cursorBaseFreq: 200,
-      cursorFreqRange: 1000,
-      cursorMaxVol: 0.15,
+      cursorBaseFreq: 180,
+      cursorFreqRange: 600,
+      cursorMaxVol: 0.18,
     },
   },
   {
