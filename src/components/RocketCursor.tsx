@@ -8,10 +8,8 @@ interface Particle {
   born: number;
 }
 
-const COLORS = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"];
 const LIFETIME = 2500;
 
-// Cursor sound engine — continuous oscillator whose pitch tracks speed
 function createCursorSound() {
   let ctx: AudioContext | null = null;
   let osc: OscillatorNode | null = null;
@@ -33,7 +31,6 @@ function createCursorSound() {
     ensure();
     if (!ctx || !osc || !gain) return;
     if (ctx.state === "suspended") ctx.resume();
-    // Map speed (0-2000 px/s) to frequency (200-1200 Hz) and volume (0-0.15)
     const clampedSpeed = Math.min(speed, 2000);
     const freq = 200 + (clampedSpeed / 2000) * 1000;
     const vol = Math.min(clampedSpeed / 2000, 1) * 0.15;
@@ -50,7 +47,15 @@ function createCursorSound() {
   return { update, silence };
 }
 
-export default function RocketCursor() {
+interface Props {
+  cursorEmoji?: string;
+  particleColors?: string[];
+}
+
+export default function RocketCursor({
+  cursorEmoji = "🚀",
+  particleColors = ["#ff6bcb", "#00e5ff", "#ffeb3b", "#76ff03", "#ff9100", "#e040fb", "#ff4081", "#00bcd4"],
+}: Props) {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [particles, setParticles] = useState<Particle[]>([]);
   const idRef = useRef(0);
@@ -66,34 +71,31 @@ export default function RocketCursor() {
     const y = p.clientY;
     setPos({ x, y });
 
-    // Calculate speed
     const now = Date.now();
-    const dt = (now - lastPosRef.current.t) / 1000; // seconds
+    const dt = (now - lastPosRef.current.t) / 1000;
     if (dt > 0) {
       const dx = x - lastPosRef.current.x;
       const dy = y - lastPosRef.current.y;
-      const speed = Math.sqrt(dx * dx + dy * dy) / dt; // px/s
+      const speed = Math.sqrt(dx * dx + dy * dy) / dt;
       soundRef.current.update(speed);
     }
     lastPosRef.current = { x, y, t: now };
 
-    // Auto-silence after 150ms of no movement
     clearTimeout(silenceTimer.current);
     silenceTimer.current = setTimeout(() => soundRef.current.silence(), 150);
 
-    // Add multiple particles per frame
     frameRef.current++;
     if (frameRef.current % 2 === 0) {
       const newParticles: Particle[] = Array.from({ length: 3 }, () => ({
         id: idRef.current++,
         x: x + (Math.random() - 0.5) * 20,
         y: y + 20 + Math.random() * 14,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        color: particleColors[Math.floor(Math.random() * particleColors.length)],
         born: Date.now(),
       }));
       setParticles((prev) => [...prev.slice(-80), ...newParticles]);
     }
-  }, []);
+  }, [particleColors]);
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMove);
@@ -129,7 +131,6 @@ export default function RocketCursor() {
           />
         );
       })}
-      {/* Rocket cursor */}
       <div
         className="absolute text-6xl"
         style={{
@@ -138,7 +139,7 @@ export default function RocketCursor() {
           transform: "translate(-50%, -50%) rotate(-45deg)",
         }}
       >
-        🚀
+        {cursorEmoji}
       </div>
     </div>
   );
