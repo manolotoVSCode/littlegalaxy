@@ -175,6 +175,7 @@ export const SCENES: SceneConfig[] = [
     ],
     starColor: "hsl(40 80% 80%)",
     constellationColor: "hsl(40 60% 60% / 0.12)",
+    showBlackHoles: false,
     sound: {
       oscType: "triangle",
       scale: SCALE_SATURN,
