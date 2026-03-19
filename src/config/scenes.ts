@@ -31,6 +31,8 @@ export interface SceneConfig {
   cursorSize: string;
   description: string;
   backgroundImage: string;
+  /** Emoji for flying ambient objects (satellite-like) */
+  flyingEmoji: string;
   objectsLeft: { emoji: string; label: string }[];
   objectsRight: { emoji: string; label: string }[];
   letterColors: string[];
@@ -59,6 +61,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🚀",
     cursorSize: "text-6xl",
     description: "The classic galaxy experience",
+    flyingEmoji: "🛰️",
     backgroundImage: bgCosmic,
     objectsLeft: [
       { emoji: "🪐", label: "planet" },
@@ -89,18 +92,19 @@ export const SCENES: SceneConfig[] = [
       noteDuration: 0.6,
       noteVolume: 0.3,
       cursorOscType: "sine",
-      cursorBaseFreq: 200,
-      cursorFreqRange: 1000,
-      cursorMaxVol: 0.15,
+      cursorBaseFreq: 180,
+      cursorFreqRange: 600,
+      cursorMaxVol: 0.18,
     },
   },
   {
     id: "dino",
     name: "Dino Nebula",
     icon: "🦕",
-    cursor: "🦶",
+    cursor: "🦖",
     cursorSize: "text-7xl",
     description: "Stellar dinosaurs roam the cosmos",
+    flyingEmoji: "🦅",
     backgroundImage: bgDino,
     objectsLeft: [
       { emoji: "🦕", label: "sauropod" },
@@ -129,11 +133,11 @@ export const SCENES: SceneConfig[] = [
       oscType: "sawtooth",
       scale: SCALE_DINO,
       noteDuration: 0.4,
-      noteVolume: 0.2,
+      noteVolume: 0.22,
       cursorOscType: "sawtooth",
-      cursorBaseFreq: 80,
-      cursorFreqRange: 70,
-      cursorMaxVol: 0.12,
+      cursorBaseFreq: 50,
+      cursorFreqRange: 80,
+      cursorMaxVol: 0.2,
     },
   },
   {
@@ -143,6 +147,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "🫧",
     cursorSize: "text-7xl",
     description: "Discover life on Saturn's rings",
+    flyingEmoji: "🛸",
     backgroundImage: bgSaturn,
     objectsLeft: [
       { emoji: "🛸", label: "ufo" },
@@ -173,9 +178,9 @@ export const SCENES: SceneConfig[] = [
       noteDuration: 1.0,
       noteVolume: 0.25,
       cursorOscType: "triangle",
-      cursorBaseFreq: 600,
-      cursorFreqRange: 600,
-      cursorMaxVol: 0.1,
+      cursorBaseFreq: 800,
+      cursorFreqRange: 1200,
+      cursorMaxVol: 0.12,
     },
   },
   {
@@ -185,6 +190,7 @@ export const SCENES: SceneConfig[] = [
     cursor: "💥",
     cursorSize: "text-7xl",
     description: "Galactic ships cross the stellar desert",
+    flyingEmoji: "🚀",
     backgroundImage: bgStarship,
     objectsLeft: [
       { emoji: "🚀", label: "rocket" },
@@ -213,20 +219,21 @@ export const SCENES: SceneConfig[] = [
       oscType: "square",
       scale: SCALE_STARSHIP,
       noteDuration: 0.3,
-      noteVolume: 0.15,
-      cursorOscType: "square",
-      cursorBaseFreq: 300,
-      cursorFreqRange: 500,
-      cursorMaxVol: 0.1,
+      noteVolume: 0.18,
+      cursorOscType: "sawtooth",
+      cursorBaseFreq: 120,
+      cursorFreqRange: 400,
+      cursorMaxVol: 0.15,
     },
   },
   {
     id: "electric",
     name: "Electric Universe",
-    icon: "⚡",
+    icon: "⚛️",
     cursor: "⚛️",
     cursorSize: "text-7xl",
     description: "A world of ions and energy",
+    flyingEmoji: "🔬",
     backgroundImage: bgElectric,
     objectsLeft: [
       { emoji: "⚡", label: "bolt" },
@@ -255,11 +262,11 @@ export const SCENES: SceneConfig[] = [
       oscType: "square",
       scale: SCALE_ELECTRIC,
       noteDuration: 0.15,
-      noteVolume: 0.12,
+      noteVolume: 0.14,
       cursorOscType: "square",
-      cursorBaseFreq: 1000,
-      cursorFreqRange: 1000,
-      cursorMaxVol: 0.08,
+      cursorBaseFreq: 1500,
+      cursorFreqRange: 2000,
+      cursorMaxVol: 0.1,
     },
   },
 ];

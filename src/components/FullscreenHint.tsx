@@ -5,7 +5,6 @@ export default function FullscreenHint() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Only show on devices with a keyboard (desktop)
     const hasKeyboard = !("ontouchstart" in window) && window.innerWidth >= 1024;
     if (!hasKeyboard) return;
 
@@ -24,7 +23,7 @@ export default function FullscreenHint() {
           exit={{ y: -30, opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          Press <kbd className="mx-1 rounded border border-border bg-muted px-2 py-0.5 font-mono text-xs text-foreground">ESC</kbd> to exit fullscreen
+          Press <kbd className="mx-1 rounded border border-border bg-muted px-2 py-0.5 font-mono text-xs text-foreground">ESC</kbd> to return to scene selector
         </motion.div>
       )}
     </AnimatePresence>

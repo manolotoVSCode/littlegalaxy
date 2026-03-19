@@ -11,7 +11,11 @@ interface SatelliteObj {
 
 let satId = 0;
 
-export default function Satellite() {
+interface Props {
+  emoji?: string;
+}
+
+export default function Satellite({ emoji = "🛰️" }: Props) {
   const [satellites, setSatellites] = useState<SatelliteObj[]>([]);
   const isSmall = useIsSmallScreen();
 
@@ -53,7 +57,7 @@ export default function Satellite() {
             exit={{ opacity: 0 }}
             transition={{ duration: s.duration, ease: "linear" }}
           >
-            🛰️
+            {emoji}
           </motion.div>
         ))}
       </AnimatePresence>
