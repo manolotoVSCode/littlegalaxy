@@ -198,15 +198,19 @@ const Index = () => {
       {/* Dark overlay for readability */}
       {started && <div className="absolute inset-0 bg-black/30 z-[0]" />}
 
-      <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
-      <Nebulas />
-      <ShootingStars />
-      {scene.showBlackHoles && <BlackHoles />}
-      <Planets />
-      {started && <Satellite emoji={scene.flyingEmoji} />}
+      {started && (
+        <>
+          <StarField starColor={scene.starColor} constellationColor={scene.constellationColor} />
+          <Nebulas />
+          <ShootingStars />
+          {scene.showBlackHoles && <BlackHoles />}
+          <Planets />
+          <Satellite emoji={scene.flyingEmoji} />
+        </>
+      )}
 
       <AnimatePresence>
-        {!started && <StartOverlay onStart={handleStart} />}
+        {(!started || isLoadingScene) && <StartOverlay onStart={handleStart} />}
       </AnimatePresence>
 
       {started && (

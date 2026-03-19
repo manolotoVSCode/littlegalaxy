@@ -234,8 +234,8 @@ export const SCENES: SceneConfig[] = [
   {
     id: "electric",
     name: "Electric Universe",
-    icon: "⚛️",
-    cursor: "⚛️",
+    icon: "⚛",
+    cursor: "⚛",
     cursorSize: "text-7xl",
     description: "A world of ions and energy",
     flyingEmoji: "🔬",
