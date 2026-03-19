@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { useIsSmallScreen } from "@/hooks/useIsSmallScreen";
+
+// Re-export for backward compat (used by scenes config now)
+export { OBJECTS_LEFT, OBJECTS_RIGHT, LETTER_COLORS } from "@/config/scenes-compat";
 
 export const OBJECTS_LEFT = [
   { emoji: "🪐", label: "planet" },
