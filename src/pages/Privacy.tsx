@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Privacy = () => (
-  <div className="min-h-screen bg-background text-foreground px-6 py-12 max-w-3xl mx-auto">
+  <div className="min-h-screen bg-background text-foreground px-6 py-12 max-w-3xl mx-auto select-text [&,&_*]:!cursor-auto">
     <Link to="/" className="text-primary hover:underline text-sm mb-8 inline-block">
       ← Back to Little Galaxy
     </Link>
