@@ -11,8 +11,8 @@ export default function LoadingOverlay({ scene }: Props) {
       className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-background"
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.08 }}
+      exit={{ opacity: 1 }}
+      transition={{ duration: 0 }}
     >
       {scene.backgroundImage ? (
         <>

@@ -197,7 +197,9 @@ const Index = () => {
     [spawnObject]
   );
 
-  const showBg = started && (!!scene.backgroundImage ? bgLoaded === scene.backgroundImage : true);
+  const loadingBackground = isLoadingScene ? pendingScene?.backgroundImage ?? null : null;
+  const activeBackground = loadingBackground || (started ? scene.backgroundImage : null);
+  const showBg = !!activeBackground && (!started || loadingBackground !== null || bgLoaded === scene.backgroundImage);
 
   return (
     <div
@@ -208,14 +210,14 @@ const Index = () => {
     >
       <div className="absolute inset-0 bg-background" />
 
-      {showBg && scene.backgroundImage && (
+      {showBg && activeBackground && (
         <div
           className="absolute inset-0 z-[0] bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${scene.backgroundImage})` }}
+          style={{ backgroundImage: `url(${activeBackground})` }}
         />
       )}
 
-      {started && <div className="absolute inset-0 z-[0] bg-black/30" />}
+      {(started || isLoadingScene) && <div className="absolute inset-0 z-[0] bg-black/30" />}
 
       {started && (
         <>
