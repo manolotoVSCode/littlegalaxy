@@ -122,6 +122,8 @@ export default function StartOverlay({ onStart }: Props) {
           transition={{ delay: 1.0 }}
         >
           A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
+          <br />
+          © 2026 Little Galaxy. All rights reserved. Comments to hello@littlegalaxy.org
         </motion.footer>
 
         {/* App Store */}
