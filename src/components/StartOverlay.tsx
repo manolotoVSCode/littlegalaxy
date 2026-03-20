@@ -96,14 +96,15 @@ export default function StartOverlay({ onStart }: Props) {
           <span className="text-xs text-muted-foreground/50">via PayPal · every little bit helps ❤️</span>
         </motion.div>
 
-        {/* App Store QR — desktop only */}
+        {/* App Store — QR on desktop, direct link on mobile */}
         <motion.div
           className="flex flex-col items-center gap-3"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.4 }}
         >
-          <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
+          {/* Desktop: QR code */}
+          <div className="hidden md:flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
             <p className="text-xs text-muted-foreground/70 uppercase tracking-widest">Download on iPhone & iPad</p>
             <img
               src={qrAppStore}
@@ -112,6 +113,17 @@ export default function StartOverlay({ onStart }: Props) {
             />
             <p className="text-xs text-muted-foreground/50">Scan with your iPhone camera</p>
           </div>
+
+          {/* Mobile: direct App Store link */}
+          <a
+            href="https://apps.apple.com/app/id6760791741"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="md:hidden inline-flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-foreground hover:bg-white/10 transition-all cursor-pointer"
+          >
+            <span className="text-xl"></span>
+            <span>Download on the App Store</span>
+          </a>
         </motion.div>
 
         {/* Footer */}
