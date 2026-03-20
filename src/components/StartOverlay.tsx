@@ -121,37 +121,8 @@ export default function StartOverlay({ onStart }: Props) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.0 }}
         >
-          A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
-          <br />
-          © 2026 Little Galaxy. All rights reserved. Comments to hello@littlegalaxy.org
+          A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers. © 2026 Little Galaxy. All rights reserved. Comments to hello@littlegalaxy.org
         </motion.footer>
-
-        {/* App Store */}
-        <motion.div
-          className="flex flex-col items-center gap-3 mt-2"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.5 }}
-        >
-          <a
-            href="https://apps.apple.com/app/id6760791741"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3 text-base font-semibold text-foreground hover:bg-primary/20 hover:border-primary/50 transition-all"
-            style={{
-              boxShadow: "0 0 20px hsl(270 80% 60% / 0.15)",
-            }}
-          >
-            <span className="text-2xl"></span>
-            <span>Download on the App Store</span>
-          </a>
-          <img
-            src={qrAppStore}
-            alt="QR code to download on the App Store"
-            className="w-28 h-28 rounded-lg border border-primary/20"
-          />
-          <span className="text-xs text-muted-foreground/50">Scan to download on iPhone & iPad</span>
-        </motion.div>
       </div>
       <AnimatePresence>
         {showGate && (
