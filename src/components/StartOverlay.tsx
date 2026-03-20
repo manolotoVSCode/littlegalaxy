@@ -98,7 +98,7 @@ export default function StartOverlay({ onStart }: Props) {
 
         {/* App Store QR — desktop only */}
         <motion.div
-          className="hidden md:flex flex-col items-center gap-3"
+          className="flex flex-col items-center gap-3"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.4 }}
