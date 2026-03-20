@@ -29,89 +29,70 @@ export default function Privacy() {
             Privacy Policy
           </h1>
           <p className="text-sm text-muted-foreground">
-            Little Galaxy · Last updated: March 2026
+            Last updated: March 19, 2026
           </p>
         </div>
 
-        <Section title="Overview">
-          Little Galaxy is a free, interactive space playground designed for
-          toddlers aged 1–5. We are committed to protecting the privacy of all
-          users, especially children. This policy explains what data we collect
-          (spoiler: none), and how we operate the app.
+        <p className="text-muted-foreground leading-relaxed text-sm">
+          This Privacy Policy applies to all applications developed and published
+          by Manuel de la Torre R ("Developer", "I", "me") on the Apple App
+          Store.
+        </p>
+
+        <Section title="1. No Data Collection">
+          I do not collect, store, transmit, or share any personal data or usage
+          data from users of my applications. My apps do not require you to
+          create an account, provide personal information, or connect to external
+          servers operated by me.
         </Section>
 
-        <Section title="Data We Collect">
-          <strong>We collect no personal data.</strong> Little Galaxy does not
-          ask for, store, or transmit any personally identifiable information
-          from you or your child. There are no accounts, no sign-ups, and no
-          user profiles.
+        <Section title="2. Data Processed on Device">
+          Any data you enter or generate while using my apps is processed
+          exclusively on your device. This data never leaves your device and is
+          not accessible to me or any third party.
         </Section>
 
-        <Section title="Analytics">
-          The web version of Little Galaxy (littlegalaxy.org) uses Google
-          Analytics solely to understand how many people visit the site (page
-          views, country of origin). No behavioral data is collected within the
-          game itself, and no data is shared with third parties for advertising
-          purposes.
+        <Section title="3. Third-Party Services">
+          My apps do not integrate third-party analytics, advertising networks,
+          or tracking SDKs. If a future version of an app includes any
+          third-party service, this Privacy Policy will be updated accordingly
+          before the update is published.
+        </Section>
+
+        <Section title="4. Apple Services">
+          My apps may use Apple frameworks and services (such as iCloud,
+          StoreKit, or GameCenter) as provided by the iOS/macOS platform. Data
+          collected by Apple through these services is governed exclusively by
+          Apple's Privacy Policy.
+        </Section>
+
+        <Section title="5. Children's Privacy">
+          My apps do not knowingly collect any information from children under
+          the age of 13. If an app is designed for children, it complies with
+          Apple's guidelines for the Kids Category and applicable law.
+        </Section>
+
+        <Section title="6. Data Retention and Deletion">
+          Since I do not collect any user data, there is no data to retain or
+          delete on my end. Any data stored locally on your device by the app can
+          be deleted by uninstalling the app.
+        </Section>
+
+        <Section title="7. Changes to This Policy">
+          I may update this Privacy Policy from time to time. Any changes will be
+          reflected in an updated version published at the same URL. Continued
+          use of my apps after any changes constitutes your acceptance of the
+          revised policy.
+        </Section>
+
+        <Section title="8. Contact">
+          If you have any questions about this Privacy Policy, you may contact
+          me:
           <br />
           <br />
-          The native iOS and Android apps do not use any analytics or tracking
-          SDK.
-        </Section>
-
-        <Section title="Children's Privacy (COPPA &amp; GDPR-K)">
-          Little Galaxy is designed for children under 13. In compliance with
-          the Children's Online Privacy Protection Act (COPPA) and the EU
-          General Data Protection Regulation (GDPR):
-          <ul className="mt-3 list-disc list-inside space-y-1 text-muted-foreground">
-            <li>We do not knowingly collect any data from children.</li>
-            <li>We do not display behaviorally targeted advertising.</li>
-            <li>We do not share any information with third parties.</li>
-            <li>There are no in-app purchases accessible to children.</li>
-            <li>There are no external links accessible during gameplay.</li>
-          </ul>
-        </Section>
-
-        <Section title="Third-Party Services">
-          The app does not integrate any third-party SDKs, advertising networks,
-          social media plugins, or analytics tools that collect user data.
-        </Section>
-
-        <Section title="Permissions">
-          Little Galaxy requests no device permissions. It does not access your
-          camera, microphone, contacts, location, or any other device feature
-          beyond the screen and speakers.
-        </Section>
-
-        <Section title="Audio">
-          Sound effects are generated locally on your device. No audio is
-          recorded or transmitted.
-        </Section>
-
-        <Section title="Changes to This Policy">
-          If we update this Privacy Policy, the new version will be posted at{" "}
-          <a
-            href="https://littlegalaxy.org/privacy"
-            className="text-primary underline"
-          >
-            littlegalaxy.org/privacy
-          </a>{" "}
-          with a revised date. We encourage parents to review it periodically.
-        </Section>
-
-        <Section title="Contact">
-          If you have any questions about this Privacy Policy, please contact
-          us:
+          <strong className="text-foreground">Manuel de la Torre R</strong>
           <br />
-          <br />
-          <a
-            href="mailto:hello@littlegalaxy.org"
-            className="text-primary underline"
-          >
-            hello@littlegalaxy.org
-          </a>
-          <br />
-          Manuel de la Torre — Creator of Little Galaxy
+          Developer, Apple App Store
         </Section>
 
         <p className="text-center text-xs text-muted-foreground/50 pt-4">
