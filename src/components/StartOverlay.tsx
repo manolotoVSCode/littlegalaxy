@@ -106,7 +106,7 @@ export default function StartOverlay({ onStart }: Props) {
           <div className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-6 py-4">
             <p className="text-xs text-muted-foreground/70 uppercase tracking-widest">Download on iPhone & iPad</p>
             <img
-              src="/qr-appstore.png"
+              src={qrAppStore}
               alt="Download Little Galaxy on the App Store"
               className="w-24 h-24 rounded-lg opacity-90"
             />
@@ -122,6 +122,8 @@ export default function StartOverlay({ onStart }: Props) {
           transition={{ delay: 1.0 }}
         >
           A personal project by Manuel de la Torre, dedicated with all the love in the world to my children, Roberto and Gabriela. Created with the hope that any boy or girl can enjoy a magical moment on screen, while giving parents a little &lsquo;creative chaos&rsquo; on their computers.
+          <br />
+          © 2026 Little Galaxy. All rights reserved. Comments to hello@littlegalaxy.org
         </motion.footer>
 
         {/* App Store */}
