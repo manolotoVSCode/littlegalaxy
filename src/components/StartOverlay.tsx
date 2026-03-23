@@ -75,26 +75,7 @@ export default function StartOverlay({ onStart }: Props) {
           <SceneSelector onSelect={onStart} />
         </motion.div>
 
-        {/* Donate Button */}
-        <motion.div
-          className="flex flex-col items-center gap-2"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-        >
-          <button
-            type="button"
-            onClick={() => setShowGate(true)}
-            className="inline-flex items-center gap-3 rounded-xl border border-accent/30 bg-accent/10 px-6 py-3 text-base font-semibold text-accent-foreground hover:bg-accent/20 hover:border-accent/50 transition-all cursor-pointer"
-            style={{
-              boxShadow: "0 0 20px hsl(320 90% 60% / 0.15)",
-            }}
-          >
-            <span className="text-2xl">☕</span>
-            <span>Support this project — Buy me a coffee</span>
-          </button>
-          <span className="text-xs text-muted-foreground/50">via PayPal · every little bit helps ❤️</span>
-        </motion.div>
+        {/* Donate Button — hidden temporarily, restore when ready */}
 
         {/* App Store — QR on desktop, direct link on mobile */}
         <motion.div
